@@ -35,16 +35,16 @@ export function CalendarPicker({ value, onChange }: CalendarPickerProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="w-full flex justify-between items-center">
+        <Button variant="outline" className="w-full flex justify-between items-center rounded-xl border-amber-200/70 focus-visible:ring-orange-500/50 bg-amber-50/20 hover:bg-amber-50/40 font-medium text-amber-900/90 shadow-none">
           <span>{value || "તારીખ પસંદ કરો"}</span>
-          <CalendarIcon className="h-4 w-4" />
+          <CalendarIcon className="h-4 w-4 text-orange-500" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] rounded-2xl border border-amber-100 bg-white">
         <DialogHeader>
-          <DialogTitle>તારીખ પસંદ કરો</DialogTitle>
+          <DialogTitle className="text-amber-900 font-bold">તારીખ પસંદ કરો</DialogTitle>
         </DialogHeader>
-        <Calendar mode="single" selected={date} onSelect={handleSelect} className="rounded-md border" />
+        <Calendar mode="single" selected={date} onSelect={handleSelect} className="rounded-xl border border-amber-100 p-3" />
       </DialogContent>
     </Dialog>
   )

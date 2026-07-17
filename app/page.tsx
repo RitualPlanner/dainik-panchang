@@ -339,105 +339,135 @@ export default function PanchangForm() {
 
   // Replace the existing Card component with this updated version
   return (
-    <div className="min-h-screen bg-slate-100 p-2 md:p-4">
-      <Card className="max-w-7xl mx-auto p-3 md:p-6 space-y-4 md:space-y-6">
-        <div className="flex justify-between items-center">
-          <div className="text-center space-y-1 md:space-y-2 flex-1">
-            <h1 className={`${getResponsiveFontSize(screenSize.width, 2)} font-bold`}>{t("ganeshInvocation")}</h1>
-            <h2 className={`${getResponsiveFontSize(screenSize.width, 1)}`}>{t("panchangHeader")}</h2>
-            <EditableText />
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50/60 to-red-100/70 py-6 px-4 md:px-8 flex items-center justify-center">
+      <Card className="max-w-7xl w-full mx-auto p-4 md:p-8 space-y-6 md:space-y-8 bg-white/95 backdrop-blur-md border border-amber-200/80 shadow-2xl rounded-2xl">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 border-b border-amber-100 pb-6">
+          <div className="text-center md:text-left space-y-2 flex-1">
+            <h1 className={`${getResponsiveFontSize(screenSize.width, 2)} font-extrabold text-orange-600 tracking-wide drop-shadow-sm`}>
+              {t("ganeshInvocation")}
+            </h1>
+            <h2 className={`${getResponsiveFontSize(screenSize.width, 1)} font-bold text-amber-800/90`}>
+              {t("panchangHeader")}
+            </h2>
+            <div className="mt-1">
+              <EditableText />
+            </div>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-3 bg-amber-50/50 p-2 rounded-xl border border-amber-100">
             <LanguageSwitcher />
           </div>
         </div>
 
         {extractionError && (
-          <Alert variant="destructive">
+          <Alert variant="destructive" className="border-red-200 bg-red-50 text-red-900 rounded-xl">
             <AlertCircle className="h-4 w-4" />
-            <AlertTitle>{t("error")}</AlertTitle>
+            <AlertTitle className="font-semibold">{t("error")}</AlertTitle>
             <AlertDescription>{t("extractionError")}</AlertDescription>
           </Alert>
         )}
 
         {showNotification && (
-          <Alert variant="default" className="bg-green-50 border-green-200">
-            <AlertCircle
-              className="h-4 w-4 text
--green-500"
-            />
-            <AlertDescription className="text-green-700">{notificationMessage}</AlertDescription>
+          <Alert variant="default" className="bg-emerald-50 border-emerald-200 rounded-xl">
+            <AlertCircle className="h-4 w-4 text-emerald-600" />
+            <AlertDescription className="text-emerald-800 font-medium">{notificationMessage}</AlertDescription>
           </Alert>
         )}
 
-        <Tabs defaultValue="form" value={activeMainTab} onValueChange={setActiveMainTab}>
-          <TabsList className="grid w-full grid-cols-1">
-            <TabsTrigger value="form" className="flex items-center">
-              <FileText className="h-4 w-4 mr-1 md:mr-2" />
+        <Tabs defaultValue="form" value={activeMainTab} onValueChange={setActiveMainTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-1 bg-amber-50/50 p-1 rounded-xl border border-amber-100/80 mb-6">
+            <TabsTrigger value="form" className="flex items-center py-2.5 rounded-lg data-[state=active]:bg-white data-[state=active]:text-orange-600 data-[state=active]:shadow-sm transition-all font-semibold">
+              <FileText className="h-4 w-4 mr-1 md:mr-2 text-orange-500" />
               <span className="text-xs md:text-sm">{t("panchangForm")}</span>
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="form" className="space-y-4 md:space-y-6">
+          <TabsContent value="form" className="space-y-6">
             <div className="flex justify-between items-center flex-wrap gap-2">
 
 
             </div>
 
-            <div className={`grid grid-cols-1 ${screenSize.isTablet ? "md:grid-cols-2" : "md:grid-cols-3"} gap-4`}>
+            <div className={`grid grid-cols-1 ${screenSize.isTablet ? "md:grid-cols-2" : "md:grid-cols-3"} gap-6`}>
               <div className="space-y-2">
-                <label className="text-sm font-medium">{t("tithi")}</label>
+                <label className="text-sm font-semibold text-amber-900/80">{t("tithi")}</label>
                 <Input
                   name="tithi"
                   autoFocus
                   value={tithi}
                   onChange={handleInputChange}
                   placeholder={t("enterTithi")}
+                  className="rounded-xl border-amber-200/70 focus-visible:ring-orange-500/50 bg-amber-50/20"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium">{t("tarikh")}</label>
+                <label className="text-sm font-semibold text-amber-900/80">{t("tarikh")}</label>
                 <CalendarPicker value={tarikh} onChange={(value) => setTarikh(value)} />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium">{t("nakshatra")}</label>
+                <label className="text-sm font-semibold text-amber-900/80">{t("nakshatra")}</label>
                 <Input
                   name="nakshatra"
                   value={nakshatra}
                   onChange={handleInputChange}
                   placeholder={t("enterNakshatra")}
+                  className="rounded-xl border-amber-200/70 focus-visible:ring-orange-500/50 bg-amber-50/20"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium">{t("yog")}</label>
-                <Input name="yog" value={yog} onChange={handleInputChange} placeholder={t("enterYog")} />
+                <label className="text-sm font-semibold text-amber-900/80">{t("yog")}</label>
+                <Input
+                  name="yog"
+                  value={yog}
+                  onChange={handleInputChange}
+                  placeholder={t("enterYog")}
+                  className="rounded-xl border-amber-200/70 focus-visible:ring-orange-500/50 bg-amber-50/20"
+                />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium">{t("karan")}</label>
-                <Input name="karan" value={karan} onChange={handleInputChange} placeholder={t("enterKaran")} />
+                <label className="text-sm font-semibold text-amber-900/80">{t("karan")}</label>
+                <Input
+                  name="karan"
+                  value={karan}
+                  onChange={handleInputChange}
+                  placeholder={t("enterKaran")}
+                  className="rounded-xl border-amber-200/70 focus-visible:ring-orange-500/50 bg-amber-50/20"
+                />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium">{t("suryoday")}</label>
-                <Input name="suryoday" value={suryoday} onChange={handleInputChange} placeholder={t("enterSunrise")} />
+                <label className="text-sm font-semibold text-amber-900/80">{t("suryoday")}</label>
+                <Input
+                  name="suryoday"
+                  value={suryoday}
+                  onChange={handleInputChange}
+                  placeholder={t("enterSunrise")}
+                  className="rounded-xl border-amber-200/70 focus-visible:ring-orange-500/50 bg-amber-50/20"
+                />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium">{t("suryasta")}</label>
-                <Input name="suryasta" value={suryasta} onChange={handleInputChange} placeholder={t("enterSunset")} />
+                <label className="text-sm font-semibold text-amber-900/80">{t("suryasta")}</label>
+                <Input
+                  name="suryasta"
+                  value={suryasta}
+                  onChange={handleInputChange}
+                  placeholder={t("enterSunset")}
+                  className="rounded-xl border-amber-200/70 focus-visible:ring-orange-500/50 bg-amber-50/20"
+                />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium">{t("aajNiRashi")}</label>
+                <label className="text-sm font-semibold text-amber-900/80">{t("aajNiRashi")}</label>
                 <Input
                   name="aajNiRashi"
                   value={aajNiRashi}
                   onChange={handleInputChange}
                   placeholder={t("enterRashi")}
+                  className="rounded-xl border-amber-200/70 focus-visible:ring-orange-500/50 bg-amber-50/20"
                 />
               </div>
 
@@ -448,8 +478,11 @@ export default function PanchangForm() {
 
             <DynamicFields fields={dinMahima} onChange={(newFields) => setDinMahima(newFields)} />
 
-            <div className="flex gap-2 md:gap-4 justify-center flex-wrap">
-              <Button onClick={handleGenerate} className={screenSize.isMobile ? "text-xs" : "w-40"}>
+            <div className="flex gap-3 justify-center flex-wrap pt-4 border-t border-amber-100">
+              <Button
+                onClick={handleGenerate}
+                className={`bg-gradient-to-r from-orange-600 to-amber-500 hover:from-orange-700 hover:to-amber-600 text-white font-semibold rounded-xl shadow-md shadow-orange-500/20 transition-all duration-200 hover:shadow-lg hover:shadow-orange-500/30 ${screenSize.isMobile ? "text-xs px-3" : "w-44"}`}
+              >
                 <Download className="mr-2 h-4 w-4" />
                 {t("generateImage")}
               </Button>
@@ -457,14 +490,18 @@ export default function PanchangForm() {
               <Button
                 onClick={handleGeneratePDF}
                 variant="outline"
-                className={screenSize.isMobile ? "text-xs" : "w-40"}
+                className={`border-amber-200 hover:bg-amber-50/50 font-semibold text-amber-900 rounded-xl transition-all duration-200 ${screenSize.isMobile ? "text-xs px-3" : "w-44"}`}
               >
-                <FileText className="mr-2 h-4 w-4" />
+                <FileText className="mr-2 h-4 w-4 text-orange-500" />
                 {t("generatePDF")}
               </Button>
 
-              <Button onClick={handleCopy} variant="outline" className={screenSize.isMobile ? "text-xs" : "w-40"}>
-                <Copy className="mr-2 h-4 w-4" />
+              <Button
+                onClick={handleCopy}
+                variant="outline"
+                className={`border-amber-200 hover:bg-amber-50/50 font-semibold text-amber-900 rounded-xl transition-all duration-200 ${screenSize.isMobile ? "text-xs px-3" : "w-44"}`}
+              >
+                <Copy className="mr-2 h-4 w-4 text-orange-500" />
                 {t("copyText")}
               </Button>
 
@@ -478,10 +515,10 @@ export default function PanchangForm() {
                     <Button
                       onClick={triggerFileInput}
                       variant="outline"
-                      className={screenSize.isMobile ? "text-xs" : "w-40"}
+                      className={`border-amber-200 hover:bg-amber-50/50 font-semibold text-amber-900 rounded-xl transition-all duration-200 ${screenSize.isMobile ? "text-xs px-3" : "w-44"}`}
                       disabled={isLoading}
                     >
-                      <Upload className="mr-2 h-4 w-4" />
+                      <Upload className="mr-2 h-4 w-4 text-orange-500" />
                       {isLoading ? t("loading") : t("loadFromImage")}
                     </Button>
                   </TooltipTrigger>
@@ -495,15 +532,18 @@ export default function PanchangForm() {
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className={screenSize.isMobile ? "text-xs" : "w-40"}>
+                  <Button
+                    variant="outline"
+                    className={`border-amber-200 hover:bg-amber-50/50 font-semibold text-amber-900 rounded-xl transition-all duration-200 ${screenSize.isMobile ? "text-xs px-3" : "w-44"}`}
+                  >
                     {t("makeBold")}
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="space-y-1">
+                <DropdownMenuContent className="space-y-1 rounded-xl p-2 border-amber-100 bg-white">
                   {Object.keys(formData).map((key) => (
-                    <DropdownMenuItem key={key} className="flex items-center space-x-2">
-                      <Checkbox checked={isFieldBold(key)} onCheckedChange={() => toggleBoldField(key)} id={key} />
-                      <Label htmlFor={key}>{t(key)}</Label>
+                    <DropdownMenuItem key={key} className="flex items-center space-x-2 rounded-lg focus:bg-amber-50">
+                      <Checkbox checked={isFieldBold(key)} onCheckedChange={() => toggleBoldField(key)} id={key} className="border-amber-400 text-orange-600 focus-visible:ring-orange-500" />
+                      <Label htmlFor={key} className="text-amber-900 cursor-pointer">{t(key)}</Label>
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Edit2 } from "lucide-react";
 
 // Helper function to safely access localStorage
 const getLocalStorage = (key, defaultValue) => {
@@ -47,25 +48,27 @@ export default function VikramSamvat() {
   };
 
   return (
-    <div>
-      <p className="text-sm">
-        {line1}{" "}
-        <span
-          className="cursor-pointer text-blue-500"
+    <div className="space-y-1.5 mt-2 bg-amber-50/60 p-3 rounded-xl border border-amber-100/50 inline-block text-left max-w-full">
+      <div className="flex items-center justify-between gap-3 group text-xs md:text-sm font-medium text-amber-900/85">
+        <span>{line1}</span>
+        <button
+          className="p-1 rounded-md hover:bg-amber-100 text-amber-700/60 hover:text-amber-800 transition-colors"
           onClick={() => handleEdit("Line 1", setLine1)}
+          title="Edit Line 1"
         >
-          ✏️
-        </span>
-      </p>
-      <p className="text-sm">
-        {line2}{" "}
-        <span
-          className="cursor-pointer text-blue-500"
+          <Edit2 className="h-3 w-3" />
+        </button>
+      </div>
+      <div className="flex items-center justify-between gap-3 group text-xs md:text-sm font-medium text-amber-900/80">
+        <span>{line2}</span>
+        <button
+          className="p-1 rounded-md hover:bg-amber-100 text-amber-700/60 hover:text-amber-800 transition-colors"
           onClick={() => handleEdit("Line 2", setLine2)}
+          title="Edit Line 2"
         >
-          ✏️
-        </span>
-      </p>
+          <Edit2 className="h-3 w-3" />
+        </button>
+      </div>
     </div>
   );
 }
