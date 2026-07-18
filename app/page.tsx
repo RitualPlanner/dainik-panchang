@@ -342,6 +342,7 @@ export default function PanchangForm() {
   return (
     <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-100/40 via-amber-50/60 to-stone-100/90 py-8 px-4 md:px-8 flex items-center justify-center">
       <Card className="relative max-w-7xl w-full mx-auto p-6 md:p-10 space-y-6 md:space-y-8 glass-panel border border-amber-200/50 shadow-2xl rounded-3xl transition-all duration-300">
+        <img src="/logo.png" alt="Dainik Panchang Logo" className="absolute top-4 left-4 md:top-6 md:left-6 h-12 w-12 md:h-16 md:w-16 object-contain hover:scale-105 transition-all duration-200 z-10 mix-blend-multiply" />
         <div className="absolute top-4 right-4 md:top-6 md:right-6 flex items-center bg-white/70 backdrop-blur-sm p-1.5 rounded-xl border border-amber-200/30 shadow-sm z-10">
           <LanguageSwitcher />
         </div>
