@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 @layer base {
+  body {
+    font-family: var(--font-poppins), sans-serif;
+  }
+  h1, h2, h3, .spiritual-header {
+    font-family: var(--font-cinzel), serif;
+  }
   :root {
     --background: 30 40% 98%;
     --foreground: 20 60% 15%;
@@ -89,3 +95,55 @@
 .animate-fade-in-up {
   animation: fadeInUp 0.3s ease-out forwards;
 }
+
+/* Custom premium design classes */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(139, 92, 26, 0.08);
+}
+
+.dark .glass-panel {
+  background: rgba(24, 18, 12, 0.9);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(245, 158, 11, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.spiritual-glow {
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+}
+
+.spiritual-border {
+  position: relative;
+}
+
+.spiritual-border::before, .spiritual-border::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #f59e0b, transparent);
+}
+
+.spiritual-border::before {
+  top: 0;
+}
+
+.spiritual-border::after {
+  bottom: 0;
+}
+
+.input-premium {
+  transition: all 0.2s ease-in-out;
+}
+
+.input-premium:focus {
+  border-color: #f57c00;
+  box-shadow: 0 0 0 3px rgba(245, 124, 0, 0.15);
+  transform: translateY(-1px);
+}
+
