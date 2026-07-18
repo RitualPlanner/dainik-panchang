@@ -14,6 +14,7 @@ import {
   AlertCircle,
   FileText,
   RefreshCw,
+  Settings,
 } from "lucide-react"
 import DynamicFields from "./dynamic-fields"
 import { generateImage, generateFormattedText, extractDataFromImage } from "./utils"
@@ -339,22 +340,22 @@ export default function PanchangForm() {
 
   // Replace the existing Card component with this updated version
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50/60 to-red-100/70 py-6 px-4 md:px-8 flex items-center justify-center">
-      <Card className="max-w-7xl w-full mx-auto p-4 md:p-8 space-y-6 md:space-y-8 bg-white/95 backdrop-blur-md border border-amber-200/80 shadow-2xl rounded-2xl">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 border-b border-amber-100 pb-6">
-          <div className="text-center md:text-left space-y-2 flex-1">
-            <h1 className={`${getResponsiveFontSize(screenSize.width, 2)} font-extrabold text-orange-600 tracking-wide drop-shadow-sm`}>
+    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-100/40 via-amber-50/60 to-stone-100/90 py-8 px-4 md:px-8 flex items-center justify-center">
+      <Card className="relative max-w-7xl w-full mx-auto p-6 md:p-10 space-y-6 md:space-y-8 glass-panel border border-amber-200/50 shadow-2xl rounded-3xl transition-all duration-300">
+        <div className="absolute top-4 right-4 md:top-6 md:right-6 flex items-center bg-white/70 backdrop-blur-sm p-1.5 rounded-xl border border-amber-200/30 shadow-sm z-10">
+          <LanguageSwitcher />
+        </div>
+        <div className="flex flex-col items-center gap-6 border-b border-amber-200/40 pb-6 text-center">
+          <div className="space-y-3 w-full flex flex-col items-center mt-6 md:mt-2">
+            <h1 className={`${getResponsiveFontSize(screenSize.width, 2.5)} font-black text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-orange-600 to-amber-600 tracking-wider drop-shadow-sm spiritual-glow`}>
               {t("ganeshInvocation")}
             </h1>
-            <h2 className={`${getResponsiveFontSize(screenSize.width, 1)} font-bold text-amber-800/90`}>
+            <h2 className={`${getResponsiveFontSize(screenSize.width, 1.2)} font-semibold text-amber-800 tracking-wide uppercase`}>
               {t("panchangHeader")}
             </h2>
-            <div className="mt-1">
+            <div className="mt-2 w-full flex justify-center">
               <EditableText />
             </div>
-          </div>
-          <div className="flex items-center space-x-3 bg-amber-50/50 p-2 rounded-xl border border-amber-100">
-            <LanguageSwitcher />
           </div>
         </div>
 
@@ -373,15 +374,7 @@ export default function PanchangForm() {
           </Alert>
         )}
 
-        <Tabs defaultValue="form" value={activeMainTab} onValueChange={setActiveMainTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-1 bg-amber-50/50 p-1 rounded-xl border border-amber-100/80 mb-6">
-            <TabsTrigger value="form" className="flex items-center py-2.5 rounded-lg data-[state=active]:bg-white data-[state=active]:text-orange-600 data-[state=active]:shadow-sm transition-all font-semibold">
-              <FileText className="h-4 w-4 mr-1 md:mr-2 text-orange-500" />
-              <span className="text-xs md:text-sm">{t("panchangForm")}</span>
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="form" className="space-y-6">
+        <div className="space-y-6">
             <div className="flex justify-between items-center flex-wrap gap-2">
 
 
@@ -389,85 +382,85 @@ export default function PanchangForm() {
 
             <div className={`grid grid-cols-1 ${screenSize.isTablet ? "md:grid-cols-2" : "md:grid-cols-3"} gap-6`}>
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-amber-900/80">{t("tithi")}</label>
+                <label className="text-sm font-semibold text-amber-900/80 tracking-wide">{t("tithi")}</label>
                 <Input
                   name="tithi"
                   autoFocus
                   value={tithi}
                   onChange={handleInputChange}
                   placeholder={t("enterTithi")}
-                  className="rounded-xl border-amber-200/70 focus-visible:ring-orange-500/50 bg-amber-50/20"
+                  className="rounded-xl border-amber-200 bg-white/60 focus:bg-white focus-visible:ring-orange-500/30 hover:border-amber-300 shadow-sm transition-all duration-200 input-premium"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-amber-900/80">{t("tarikh")}</label>
+                <label className="text-sm font-semibold text-amber-900/80 tracking-wide">{t("tarikh")}</label>
                 <CalendarPicker value={tarikh} onChange={(value) => setTarikh(value)} />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-amber-900/80">{t("nakshatra")}</label>
+                <label className="text-sm font-semibold text-amber-900/80 tracking-wide">{t("nakshatra")}</label>
                 <Input
                   name="nakshatra"
                   value={nakshatra}
                   onChange={handleInputChange}
                   placeholder={t("enterNakshatra")}
-                  className="rounded-xl border-amber-200/70 focus-visible:ring-orange-500/50 bg-amber-50/20"
+                  className="rounded-xl border-amber-200 bg-white/60 focus:bg-white focus-visible:ring-orange-500/30 hover:border-amber-300 shadow-sm transition-all duration-200 input-premium"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-amber-900/80">{t("yog")}</label>
+                <label className="text-sm font-semibold text-amber-900/80 tracking-wide">{t("yog")}</label>
                 <Input
                   name="yog"
                   value={yog}
                   onChange={handleInputChange}
                   placeholder={t("enterYog")}
-                  className="rounded-xl border-amber-200/70 focus-visible:ring-orange-500/50 bg-amber-50/20"
+                  className="rounded-xl border-amber-200 bg-white/60 focus:bg-white focus-visible:ring-orange-500/30 hover:border-amber-300 shadow-sm transition-all duration-200 input-premium"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-amber-900/80">{t("karan")}</label>
+                <label className="text-sm font-semibold text-amber-900/80 tracking-wide">{t("karan")}</label>
                 <Input
                   name="karan"
                   value={karan}
                   onChange={handleInputChange}
                   placeholder={t("enterKaran")}
-                  className="rounded-xl border-amber-200/70 focus-visible:ring-orange-500/50 bg-amber-50/20"
+                  className="rounded-xl border-amber-200 bg-white/60 focus:bg-white focus-visible:ring-orange-500/30 hover:border-amber-300 shadow-sm transition-all duration-200 input-premium"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-amber-900/80">{t("suryoday")}</label>
+                <label className="text-sm font-semibold text-amber-900/80 tracking-wide">{t("suryoday")}</label>
                 <Input
                   name="suryoday"
                   value={suryoday}
                   onChange={handleInputChange}
                   placeholder={t("enterSunrise")}
-                  className="rounded-xl border-amber-200/70 focus-visible:ring-orange-500/50 bg-amber-50/20"
+                  className="rounded-xl border-amber-200 bg-white/60 focus:bg-white focus-visible:ring-orange-500/30 hover:border-amber-300 shadow-sm transition-all duration-200 input-premium"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-amber-900/80">{t("suryasta")}</label>
+                <label className="text-sm font-semibold text-amber-900/80 tracking-wide">{t("suryasta")}</label>
                 <Input
                   name="suryasta"
                   value={suryasta}
                   onChange={handleInputChange}
                   placeholder={t("enterSunset")}
-                  className="rounded-xl border-amber-200/70 focus-visible:ring-orange-500/50 bg-amber-50/20"
+                  className="rounded-xl border-amber-200 bg-white/60 focus:bg-white focus-visible:ring-orange-500/30 hover:border-amber-300 shadow-sm transition-all duration-200 input-premium"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-amber-900/80">{t("aajNiRashi")}</label>
+                <label className="text-sm font-semibold text-amber-900/80 tracking-wide">{t("aajNiRashi")}</label>
                 <Input
                   name="aajNiRashi"
                   value={aajNiRashi}
                   onChange={handleInputChange}
                   placeholder={t("enterRashi")}
-                  className="rounded-xl border-amber-200/70 focus-visible:ring-orange-500/50 bg-amber-50/20"
+                  className="rounded-xl border-amber-200 bg-white/60 focus:bg-white focus-visible:ring-orange-500/30 hover:border-amber-300 shadow-sm transition-all duration-200 input-premium"
                 />
               </div>
 
@@ -549,92 +542,8 @@ export default function PanchangForm() {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-          </TabsContent>
-
-
-
-          <TabsContent value="settings" className="space-y-4 md:space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">{t("selectTheme")}</label>
-                  <ThemeSelector onChange={setCurrentTheme} />
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">{t("editTitle")}</label>
-                  <EditableText />
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">{t("language")}</label>
-                  <div className="flex gap-2">
-                    <LanguageSwitcher />
-                    <Button variant="outline" onClick={() => setActiveMainTab("form")}>
-                      {language === "gu" ? "ફોર્મ પર પાછા જાઓ" : language === "hi" ? "फॉर्म पर वापस जाएं" : "Back to Form"}
-                    </Button>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">
-                    {language === "gu" ? "નોટિફિકેશન" : language === "hi" ? "नोटिफिकेशन" : "Notifications"}
-                  </label>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox id="notifications" />
-                    <Label htmlFor="notifications">
-                      {language === "gu"
-                        ? "તહેવાર નોટિફિકેશન મેળવો"
-                        : language === "hi"
-                          ? "त्योहार नोटिफिकेशन प्राप्त करें"
-                          : "Receive festival notifications"}
-                    </Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox id="daily-panchang" />
-                    <Label htmlFor="daily-panchang">
-                      {language === "gu"
-                        ? "દૈનિક પંચાંગ અપડેટ મેળવો"
-                        : language === "hi"
-                          ? "दैनिक पंचांग अपडेट प्राप्त करें"
-                          : "Receive daily panchang updates"}
-                    </Label>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">
-                    {language === "gu" ? "ઓફલાઇન મોડ" : language === "hi" ? "ऑफलाइन मोड" : "Offline Mode"}
-                  </label>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox id="offline-mode" />
-                    <Label htmlFor="offline-mode">
-                      {language === "gu"
-                        ? "ઓફલાઇન ઉપયોગ માટે ડેટા સાચવો"
-                        : language === "hi"
-                          ? "ऑफलाइन उपयोग के लिए डेटा सहेजें"
-                          : "Save data for offline use"}
-                    </Label>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">
-                    {language === "gu" ? "ડેટા અને પ્રાઇવસી" : language === "hi" ? "डेटा और प्राइवेसी" : "Data & Privacy"}
-                  </label>
-                  <Button variant="outline" className="w-full">
-                    {language === "gu" ? "ડેટા સાફ કરો" : language === "hi" ? "डेटा साफ करें" : "Clear Data"}
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </TabsContent>
-
-
-        </Tabs>
-      </Card>
+          </div>
+        </Card>
 
       {/* Floating notification */}
       {showNotification && (

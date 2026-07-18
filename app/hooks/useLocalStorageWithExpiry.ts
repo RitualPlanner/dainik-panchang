@@ -47,28 +47,33 @@ export function useLocalStorageWithExpiry<T>(
   // Initialize state with stored value or default
   const [value, setValue] = useState<T>(getStoredValue)
 
-  // Update localStorage when value changes
+  // Update React state synchronously (instantly)
   const setStoredValue = (newValue: T): void => {
-    try {
-      // Save to state
-      setValue(newValue)
+    setValue(newValue)
+  }
 
-      // Save to localStorage with expiry
-      if (typeof window !== "undefined") {
+  // Debounced effect to write to localStorage after typing stops (500ms delay)
+  useEffect(() => {
+    if (typeof window === "undefined") return
+
+    const timer = setTimeout(() => {
+      try {
         const now = new Date().getTime()
         const expiryTime = now + expiryInMinutes * 60 * 1000
 
         const item: StorageItem<T> = {
-          value: newValue,
+          value: value,
           expiry: expiryTime,
         }
 
         window.localStorage.setItem(key, JSON.stringify(item))
+      } catch (error) {
+        console.error("Error writing to localStorage:", error)
       }
-    } catch (error) {
-      console.error("Error writing to localStorage:", error)
-    }
-  }
+    }, 500) // 500ms debounce delay
+
+    return () => clearTimeout(timer)
+  }, [value, key, expiryInMinutes])
 
   // Check for expiry on mount and set up interval to check periodically
   useEffect(() => {
