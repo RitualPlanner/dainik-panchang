@@ -1,5 +1,6 @@
 import type React from "react"
 import "./globals.css"
+import "react-day-picker/dist/style.css"
 import { LanguageProvider } from "./contexts/language-context"
 import { Poppins, Cinzel } from "next/font/google"
 
