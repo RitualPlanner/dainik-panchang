@@ -1,5 +1,6 @@
 import type React from "react"
 import "./globals.css"
+import "react-day-picker/dist/style.css"
 import { LanguageProvider } from "./contexts/language-context"
 import { Poppins, Cinzel } from "next/font/google"
 
@@ -30,5 +31,12 @@ export default function RootLayout({
 }
 
 export const metadata = {
-      generator: 'v0.app'
-    };
+  title: "Dainik Panchang - Hindu Lunar Calendar Generator",
+  description: "Create, customize, and share daily panchang details including tithi, nakshatra, yog, karan, sunrise/sunset times, and more. Features multilingual support, QR code generation, and PDF export.",
+  icons: {
+    icon: "https://res.cloudinary.com/db6qh4jsv/image/upload/v1784385541/logo_etlkxf.png",
+    shortcut: "https://res.cloudinary.com/db6qh4jsv/image/upload/v1784385541/logo_etlkxf.png",
+    apple: "https://res.cloudinary.com/db6qh4jsv/image/upload/v1784385541/logo_etlkxf.png",
+  },
+  generator: 'v0.app'
+};
