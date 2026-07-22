@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Edit2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -45,6 +45,11 @@ export default function VikramSamvat() {
   const [tempLine1, setTempLine1] = useState("")
   const [tempLine2, setTempLine2] = useState("")
   const [isOpen, setIsOpen] = useState(false)
+  const [focusTarget, setFocusTarget] = useState<"line1" | "line2" | null>(null)
+
+  // Refs for focusing
+  const line1InputRef = useRef<HTMLInputElement>(null)
+  const line2InputRef = useRef<HTMLInputElement>(null)
 
   // Initialize state once the component mounts
   useEffect(() => {
@@ -61,10 +66,26 @@ export default function VikramSamvat() {
     setLocalStorage("vikramSamvatLine2", line2)
   }, [line2])
 
+  // Focus management when dialog opens
+  useEffect(() => {
+    if (isOpen && focusTarget) {
+      const timer = setTimeout(() => {
+        const input = focusTarget === "line1" ? line1InputRef.current : line2InputRef.current
+        if (input) {
+          input.focus()
+          const len = input.value.length
+          input.setSelectionRange(len, len)
+        }
+      }, 50)
+      return () => clearTimeout(timer)
+    }
+  }, [isOpen, focusTarget])
+
   // Open dialog and load current lines
-  const handleOpenDialog = () => {
+  const handleOpenDialog = (target: "line1" | "line2") => {
     setTempLine1(line1)
     setTempLine2(line2)
+    setFocusTarget(target)
     setIsOpen(true)
   }
 
@@ -116,7 +137,7 @@ export default function VikramSamvat() {
           <DialogTrigger asChild>
             <button
               className="p-1 rounded-md hover:bg-amber-100 text-amber-700/60 hover:text-amber-800 transition-colors"
-              onClick={handleOpenDialog}
+              onClick={() => handleOpenDialog("line1")}
               title="Edit Details"
             >
               <Edit2 className="h-3 w-3" />
@@ -135,6 +156,7 @@ export default function VikramSamvat() {
                 </Label>
                 <Input
                   id="line1"
+                  ref={line1InputRef}
                   value={tempLine1}
                   onChange={(e) => setTempLine1(e.target.value)}
                   className="rounded-xl border-amber-200 focus-visible:ring-orange-500/30 bg-amber-50/10 text-left"
@@ -146,6 +168,7 @@ export default function VikramSamvat() {
                 </Label>
                 <Input
                   id="line2"
+                  ref={line2InputRef}
                   value={tempLine2}
                   onChange={(e) => setTempLine2(e.target.value)}
                   className="rounded-xl border-amber-200 focus-visible:ring-orange-500/30 bg-amber-50/10 text-left"
@@ -176,7 +199,7 @@ export default function VikramSamvat() {
         <span>{line2}</span>
         <button
           className="p-1 rounded-md hover:bg-amber-100 text-amber-700/60 hover:text-amber-800 transition-colors"
-          onClick={handleOpenDialog}
+          onClick={() => handleOpenDialog("line2")}
           title="Edit Details"
         >
           <Edit2 className="h-3 w-3" />
