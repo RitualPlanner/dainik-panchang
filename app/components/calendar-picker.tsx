@@ -1,11 +1,11 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Calendar } from "@/components/ui/calendar"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { CalendarIcon } from "lucide-react"
-import { convertToGujaratiNumerals } from "../utils/date-utils"
+import { convertToGujaratiNumerals, parseGujaratiDate } from "../utils/date-utils"
 
 interface CalendarPickerProps {
   value: string
@@ -15,6 +15,16 @@ interface CalendarPickerProps {
 export function CalendarPicker({ value, onChange }: CalendarPickerProps) {
   const [open, setOpen] = useState(false)
   const [date, setDate] = useState<Date | undefined>(undefined)
+
+  // Sync date selection state when picker is opened or value is changed externally
+  useEffect(() => {
+    if (value) {
+      const parsed = parseGujaratiDate(value)
+      if (parsed) {
+        setDate(parsed)
+      }
+    }
+  }, [value, open])
 
   const handleSelect = (date: Date | undefined) => {
     if (!date) return
@@ -44,7 +54,7 @@ export function CalendarPicker({ value, onChange }: CalendarPickerProps) {
         <DialogHeader>
           <DialogTitle className="text-amber-900 font-bold">તારીખ પસંદ કરો</DialogTitle>
         </DialogHeader>
-        <Calendar mode="single" selected={date} onSelect={handleSelect} className="rounded-xl border border-amber-100 p-3" />
+        <Calendar mode="single" selected={date} onSelect={handleSelect} className="rounded-xl border border-amber-100 p-3 mx-auto" />
       </DialogContent>
     </Dialog>
   )
