@@ -2,6 +2,7 @@
   "name": "Dainik-Panchang",
   "version": "1.0.0",
   "private": true,
+  "packageManager": "pnpm@11.14.0",
   "description": "A comprehensive Panchang (Hindu lunar calendar) generator application built with Next.js. Create, customize, and share daily panchang details including tithi, nakshatra, yog, karan, sunrise/sunset times, and more. Features multilingual support (Gujarati, Hindi, English), QR code generation, PDF export, image upload for data extraction, and responsive design for all devices.",
   "scripts": {
     "build": "next build",
