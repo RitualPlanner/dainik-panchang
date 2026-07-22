@@ -143,7 +143,7 @@ export default function VikramSamvat() {
               <Edit2 className="h-3 w-3" />
             </button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[480px] rounded-2xl border border-amber-100 bg-white shadow-xl">
+          <DialogContent className="w-[calc(100%-2rem)] sm:max-w-[480px] rounded-2xl border border-amber-100 bg-white shadow-xl">
             <DialogHeader>
               <DialogTitle className="font-bold text-amber-950 text-base md:text-lg">
                 {getT("title")}

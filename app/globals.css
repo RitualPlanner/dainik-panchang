@@ -39,6 +39,9 @@
     --ring: 24 95% 50%;
 
     --radius: 0.75rem;
+
+    --rdp-accent-color: hsl(var(--primary));
+    --rdp-accent-background-color: hsl(var(--primary));
   }
 
   .dark {
@@ -69,6 +72,9 @@
     --border: 24 30% 18%;
     --input: 24 30% 18%;
     --ring: 28 95% 55%;
+
+    --rdp-accent-color: hsl(var(--primary));
+    --rdp-accent-background-color: hsl(var(--primary));
   }
 }
 
