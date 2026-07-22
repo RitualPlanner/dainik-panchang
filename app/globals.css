@@ -45,32 +45,32 @@
   }
 
   .dark {
-    --background: 24 45% 7%;
+    --background: 24 15% 10%;
     --foreground: 36 100% 97%;
 
-    --card: 24 40% 10%;
+    --card: 24 15% 15%;
     --card-foreground: 36 100% 97%;
 
-    --popover: 24 40% 10%;
+    --popover: 24 15% 15%;
     --popover-foreground: 36 100% 97%;
 
     --primary: 28 95% 55%;
-    --primary-foreground: 24 45% 7%;
+    --primary-foreground: 24 15% 15%;
 
-    --secondary: 24 30% 15%;
+    --secondary: 24 15% 20%;
     --secondary-foreground: 38 92% 90%;
 
-    --muted: 24 30% 15%;
+    --muted: 24 15% 18%;
     --muted-foreground: 30 15% 65%;
 
-    --accent: 28 85% 20%;
+    --accent: 28 85% 22%;
     --accent-foreground: 38 92% 90%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 24 30% 18%;
-    --input: 24 30% 18%;
+    --border: 24 12% 20%;
+    --input: 24 12% 20%;
     --ring: 28 95% 55%;
 
     --rdp-accent-color: hsl(var(--primary));
@@ -111,10 +111,10 @@
 }
 
 .dark .glass-panel {
-  background: rgba(24, 18, 12, 0.9);
+  background: rgba(35, 29, 23, 0.88);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(245, 158, 11, 0.15);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(245, 158, 11, 0.18);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
 }
 
 .spiritual-glow {
@@ -152,4 +152,74 @@
   box-shadow: 0 0 0 3px rgba(245, 124, 0, 0.15);
   transform: translateY(-1px);
 }
+
+/* Premium Dark Mode overrides */
+.dark .input-premium {
+  background-color: rgba(24, 18, 12, 0.55) !important;
+  border-color: rgba(245, 158, 11, 0.15) !important;
+  color: #fdfaf5 !important;
+}
+
+.dark .input-premium::placeholder {
+  color: rgba(253, 250, 245, 0.35) !important;
+}
+
+.dark .input-premium:focus {
+  background-color: rgba(24, 18, 12, 0.8) !important;
+  border-color: rgba(245, 158, 11, 0.4) !important;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1) !important;
+}
+
+.dark label {
+  color: rgba(253, 230, 138, 0.85) !important;
+}
+
+.dark .text-amber-800 {
+  color: #fcd34d !important;
+}
+
+.dark .text-amber-900 {
+  color: #fde68a !important;
+}
+
+.dark .text-amber-900\/80 {
+  color: rgba(253, 230, 138, 0.75) !important;
+}
+
+.dark .text-amber-900\/85 {
+  color: rgba(253, 230, 138, 0.9) !important;
+}
+
+.dark .text-amber-900\/90 {
+  color: rgba(253, 230, 138, 0.95) !important;
+}
+
+.dark .border-amber-200 {
+  border-color: rgba(245, 158, 11, 0.22) !important;
+}
+
+.dark .border-amber-200\/70 {
+  border-color: rgba(245, 158, 11, 0.22) !important;
+}
+
+.dark .border-amber-100\/50 {
+  border-color: rgba(245, 158, 11, 0.18) !important;
+}
+
+.dark .bg-amber-50\/60 {
+  background-color: rgba(35, 29, 23, 0.6) !important;
+}
+
+.dark .bg-amber-50\/20 {
+  background-color: rgba(35, 29, 23, 0.4) !important;
+}
+
+.dark .hover\:bg-amber-50\/50:hover {
+  background-color: rgba(245, 158, 11, 0.08) !important;
+}
+
+.dark .hover\:bg-amber-50\/40:hover {
+  background-color: rgba(245, 158, 11, 0.12) !important;
+}
+
 
