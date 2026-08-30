@@ -1,31 +1,36 @@
-# Panchang Generator
+# Dainik-Panchang 📅
+
+![Version](https://img.shields.io/badge/version-1.1.1-orange.svg)
 
 A comprehensive and user-friendly Panchang (Hindu lunar calendar) generator application built with modern web technologies. Generate, customize, and share daily panchang details with ease.
 
 ## Overview
 
-The Panchang Generator is a feature-rich web application designed to help users create detailed panchang (Hindu calendar) information for any date. Whether you're a Hindu priest, astrologer, or someone interested in Hindu traditions, this tool makes it easy to generate, customize, and share panchang details.
+Dainik-Panchang is a feature-rich web application designed to help users create detailed panchang (Hindu calendar) information for any date. Whether you're a Hindu priest, astrologer, or someone interested in Hindu traditions, this tool makes it easy to generate, customize, and share panchang details.
 
 ## Features
 
 ### Core Features
 - **Panchang Information Input**: Manually enter all panchang details including:
   - Tithi (lunar day)
+  - Tarikh (date formatting with Gujarati numerals)
   - Nakshatra (lunar mansion)
   - Yog (auspicious period)
   - Karan (half lunar day)
   - Sunrise and Sunset times
-  - Rashi (zodiac sign)
-  - Din Mahima (day significance)
+  - Aaj Ni Rashi (today's zodiac sign)
+  - Din Mahima (day significance & festivals)
 
-- **Date Management**: 
-  - Calendar picker for date selection
-  - Automatic date formatting in Gujarati numerals
+- **Date Management & Header Editing**: 
+  - Interactive date picker with circular date selection
+  - Automatic date formatting in Gujarati numerals (`૨૦૮૧`)
+  - Customizable Vikram Samvat headers
   - 30-minute data persistence with localStorage
 
-- **Image Generation**:
-  - Generate beautifully formatted panchang images
-  - Multiple theme options for customization
+- **Image & PDF Generation**:
+  - Generate beautifully formatted panchang card images
+  - High-quality PDF document export
+  - Multiple theme options with full Dark Mode support
   - Overlay selection (deity images, borders)
 
 ### Export & Sharing
@@ -33,18 +38,17 @@ The Panchang Generator is a feature-rich web application designed to help users 
 - **PDF Export**: Generate high-quality PDF documents
 - **QR Code Generation**: Create QR codes containing full panchang details
 - **Text Copying**: Copy formatted panchang text to clipboard
-- **WhatsApp Sharing**: Direct sharing via WhatsApp Web
-- **Facebook Sharing**: Share to Facebook
+- **WhatsApp & Social Sharing**: Direct sharing via WhatsApp Web & Facebook
+- **Top-Center Toast Notifications**: Clean non-intrusive action feedback
 
 ### Data Management
 - **Image Upload & OCR**: Upload existing panchang images and automatically extract data using Tesseract.js
 - **Data Persistence**: Form data is automatically saved to localStorage for 30 minutes
 - **Auto-expiry**: Stored data automatically clears after 30 minutes of inactivity
 
-### Multilingual Support
-- **Gujarati** (ગુજરાતી)
-- **Hindi** (हिंदी)
-- **English**
+### Multilingual & Dark Mode Support
+- **Multilingual UI**: Gujarati (ગુજરાતી), Hindi (हिंदी), and English
+- **Theme Support**: Seamless Light & Dark mode support across form inputs, dropdowns, and calendar pickers
 
 ### Responsive Design
 - Mobile-friendly interface
@@ -60,9 +64,10 @@ The Panchang Generator is a feature-rich web application designed to help users 
 
 ## Technology Stack
 
-- **Frontend Framework**: Next.js 14.2.35
-- **UI Library**: React 19
+- **Framework**: Next.js 14.2.35 (App Router)
+- **Frontend Framework**: React 19
 - **Styling**: Tailwind CSS + shadcn/ui components
+- **Package Manager**: pnpm 11.14.0 / npm
 - **OCR**: Tesseract.js (for image text extraction)
 - **QR Code**: qrcode library
 - **PDF Generation**: jsPDF
@@ -73,25 +78,25 @@ The Panchang Generator is a feature-rich web application designed to help users 
 ## Getting Started
 
 ### Prerequisites
-- Node.js 16+ 
-- npm or yarn package manager
+- Node.js 18+ 
+- pnpm or npm package manager
 
 ### Installation
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd panchang-generator
+git clone https://github.com/RitualPlanner/dainik-panchang.git
+cd dainik-panchang
 ```
 
 2. Install dependencies:
 ```bash
-npm install
+pnpm install
 ```
 
 3. Run the development server:
 ```bash
-npm run dev
+pnpm dev
 ```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser
