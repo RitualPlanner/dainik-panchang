@@ -99,7 +99,7 @@ export async function generatePDF(formData: any, boldFields: string[]) {
 
   // Add rashi
   setFont("aajNiRashi")
-  doc.text(`-  આજ ની રાશી...  ${formData.aajNiRashi} .`, 30, y)
+  doc.text(`-  આજ ની રાશી :  ${formData.aajNiRashi}`, 30, y)
   y += 20
 
   // Add din mahima - centered title
