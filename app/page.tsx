@@ -551,16 +551,16 @@ export default function PanchangForm() {
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="outline"
-                    className={`border-amber-200 hover:bg-amber-50/50 font-semibold text-amber-900 rounded-xl transition-all duration-200 ${screenSize.isMobile ? "text-xs px-3" : "w-44"}`}
+                    className={`border-amber-200 dark:border-amber-800/60 hover:bg-amber-50/50 dark:hover:bg-amber-950/40 font-semibold text-amber-900 dark:text-amber-100 rounded-xl transition-all duration-200 ${screenSize.isMobile ? "text-xs px-3" : "w-44"}`}
                   >
                     {t("makeBold")}
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="space-y-1 rounded-xl p-2 border-amber-100 bg-white">
+                <DropdownMenuContent className="space-y-1 rounded-xl p-2 border-amber-200/50 dark:border-amber-900/50 bg-white dark:bg-stone-900 shadow-xl">
                   {Object.keys(formData).map((key) => (
-                    <DropdownMenuItem key={key} className="flex items-center space-x-2 rounded-lg focus:bg-amber-50">
-                      <Checkbox checked={isFieldBold(key)} onCheckedChange={() => toggleBoldField(key)} id={key} className="border-amber-400 text-orange-600 focus-visible:ring-orange-500" />
-                      <Label htmlFor={key} className="text-amber-900 cursor-pointer">{t(key)}</Label>
+                    <DropdownMenuItem key={key} className="flex items-center space-x-2 rounded-lg focus:bg-amber-100/60 dark:focus:bg-amber-950/60 cursor-pointer">
+                      <Checkbox checked={isFieldBold(key)} onCheckedChange={() => toggleBoldField(key)} id={key} className="border-amber-500 dark:border-amber-400 data-[state=checked]:bg-orange-600 dark:data-[state=checked]:bg-orange-500 text-white focus-visible:ring-orange-500" />
+                      <Label htmlFor={key} className="text-amber-950 dark:text-amber-100 font-medium cursor-pointer flex-1">{t(key)}</Label>
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>
