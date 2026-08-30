@@ -115,7 +115,7 @@ export const generateImage = async (formData: FormData, boldFields: string[]) =>
 
   // Add rashi
   setFont("aajNiRashi")
-  ctx.fillText(`-  આજ ની રાશી...  ${formData.aajNiRashi} .`, 50, y)
+  ctx.fillText(`-  આજ ની રાશી :  ${formData.aajNiRashi}`, 50, y)
   y += 30
 
   // Add separator - left-aligned
@@ -180,10 +180,9 @@ export const generateFormattedText = (formData: FormData, boldFields: string[]):
   text += "............................\n"
 
   // Add rashi
-  text += `- ${boldFields.includes("aajNiRashi") ? bold(`આજ ની રાશી: ${formData.aajNiRashi}`) : `આજ ની રાશી: ${formData.aajNiRashi}`}\n`
+  text += `- ${boldFields.includes("aajNiRashi") ? bold(`આજ ની રાશી : ${formData.aajNiRashi}`) : `આજ ની રાશી : ${formData.aajNiRashi}`}\n`
 
   text += "............................\n"
-  text += "\n"
   // Add din mahima - centered
   text += bold("આજ નો દિન મહિમા") + "\n"
 
