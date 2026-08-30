@@ -396,13 +396,6 @@ export default function PanchangForm() {
           </Alert>
         )}
 
-        {showNotification && (
-          <Alert variant="default" className="bg-emerald-50 border-emerald-200 rounded-xl">
-            <AlertCircle className="h-4 w-4 text-emerald-600" />
-            <AlertDescription className="text-emerald-800 font-medium">{notificationMessage}</AlertDescription>
-          </Alert>
-        )}
-
         <div className="space-y-6">
             <div className="flex justify-between items-center flex-wrap gap-2">
 
@@ -571,7 +564,7 @@ export default function PanchangForm() {
 
       {/* Floating notification */}
       {showNotification && (
-        <div className="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg animate-fade-in-up">
+        <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-emerald-600 text-white px-5 py-2.5 rounded-xl shadow-lg border border-emerald-500/20 font-medium text-sm transition-all duration-300 animate-in fade-in slide-in-from-top-4">
           {notificationMessage}
         </div>
       )}
