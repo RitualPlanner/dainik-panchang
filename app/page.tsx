@@ -44,11 +44,9 @@ import { useScreenSize, getResponsiveFontSize } from "./utils/responsive-utils";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
+  DropdownMenuCheckboxItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import {
   Tooltip,
   TooltipContent,
@@ -647,23 +645,15 @@ export default function PanchangForm() {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="space-y-1 rounded-xl p-2 border-amber-200/50 dark:border-amber-900/50 bg-white dark:bg-stone-900 shadow-xl">
                 {Object.keys(formData).map((key) => (
-                  <DropdownMenuItem
+                  <DropdownMenuCheckboxItem
                     key={key}
-                    className="flex items-center space-x-2 rounded-lg focus:bg-amber-100/60 dark:focus:bg-amber-950/60 cursor-pointer"
+                    checked={isFieldBold(key)}
+                    onCheckedChange={() => toggleBoldField(key)}
+                    onSelect={(e) => e.preventDefault()}
+                    className="cursor-pointer text-amber-950 dark:text-amber-100 font-medium rounded-lg focus:bg-amber-100/60 dark:focus:bg-amber-950/60"
                   >
-                    <Checkbox
-                      checked={isFieldBold(key)}
-                      onCheckedChange={() => toggleBoldField(key)}
-                      id={key}
-                      className="border-amber-500 dark:border-amber-400 data-[state=checked]:bg-orange-600 dark:data-[state=checked]:bg-orange-500 text-white focus-visible:ring-orange-500"
-                    />
-                    <Label
-                      htmlFor={key}
-                      className="text-amber-950 dark:text-amber-100 font-medium cursor-pointer flex-1"
-                    >
-                      {t(key)}
-                    </Label>
-                  </DropdownMenuItem>
+                    {t(key)}
+                  </DropdownMenuCheckboxItem>
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
