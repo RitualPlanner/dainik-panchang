@@ -445,7 +445,7 @@ export default function PanchangForm() {
             >
               {t("panchangHeader")}
             </h2>
-            <div className="mt-2 w-full flex justify-center">
+            <div className="w-full flex justify-center">
               <EditableText />
             </div>
           </div>
