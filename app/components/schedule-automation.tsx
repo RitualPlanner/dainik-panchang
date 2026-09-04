@@ -1,37 +1,46 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
-import { Calendar } from "@/components/ui/calendar"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Clock, Bell, Share2, Repeat, Trash2 } from "lucide-react"
-import { useLanguage } from "../contexts/language-context"
-import { useScreenSize } from "../utils/responsive-utils"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Calendar } from "@/components/ui/calendar";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Clock, Bell, Share2, Repeat, Trash2 } from "lucide-react";
+import { useLanguage } from "../contexts/language-context";
+import { useScreenSize } from "../utils/responsive-utils";
 
 // Define schedule types
-type ScheduleFrequency = "once" | "daily" | "weekly" | "monthly"
-type ScheduleAction = "generate" | "share" | "notify"
+type ScheduleFrequency = "once" | "daily" | "weekly" | "monthly";
+type ScheduleAction = "generate" | "share" | "notify";
 
 interface Schedule {
-  id: string
-  name: string
-  frequency: ScheduleFrequency
-  action: ScheduleAction
-  startDate: Date
-  time: string
-  recipients?: string[]
-  isActive: boolean
-  lastRun?: Date
+  id: string;
+  name: string;
+  frequency: ScheduleFrequency;
+  action: ScheduleAction;
+  startDate: Date;
+  time: string;
+  recipients?: string[];
+  isActive: boolean;
+  lastRun?: Date;
 }
 
 export function ScheduleAutomation() {
-  const { language, t } = useLanguage()
-  const [open, setOpen] = useState(false)
-  const [activeTab, setActiveTab] = useState<"schedules" | "create">("schedules")
+  const { language, t } = useLanguage();
+  const [open, setOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<"schedules" | "create">(
+    "schedules"
+  );
   const [schedules, setSchedules] = useState<Schedule[]>([
     {
       id: "s1",
@@ -54,10 +63,12 @@ export function ScheduleAutomation() {
       isActive: true,
       lastRun: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // Last week
     },
-  ])
+  ]);
 
   // New schedule form state
-  const [newSchedule, setNewSchedule] = useState<Omit<Schedule, "id" | "lastRun">>({
+  const [newSchedule, setNewSchedule] = useState<
+    Omit<Schedule, "id" | "lastRun">
+  >({
     name: "",
     frequency: "daily",
     action: "generate",
@@ -65,13 +76,13 @@ export function ScheduleAutomation() {
     time: "08:00",
     recipients: [],
     isActive: true,
-  })
+  });
 
-  const screenSize = useScreenSize()
+  const screenSize = useScreenSize();
 
   const handleCreateSchedule = () => {
-    const id = `s${schedules.length + 1}`
-    setSchedules([...schedules, { ...newSchedule, id }])
+    const id = `s${schedules.length + 1}`;
+    setSchedules([...schedules, { ...newSchedule, id }]);
 
     // Reset form
     setNewSchedule({
@@ -82,68 +93,100 @@ export function ScheduleAutomation() {
       time: "08:00",
       recipients: [],
       isActive: true,
-    })
+    });
 
-    setActiveTab("schedules")
-  }
+    setActiveTab("schedules");
+  };
 
   const handleToggleSchedule = (id: string) => {
     setSchedules(
-      schedules.map((schedule) => (schedule.id === id ? { ...schedule, isActive: !schedule.isActive } : schedule)),
-    )
-  }
+      schedules.map((schedule) =>
+        schedule.id === id
+          ? { ...schedule, isActive: !schedule.isActive }
+          : schedule
+      )
+    );
+  };
 
   const handleDeleteSchedule = (id: string) => {
-    setSchedules(schedules.filter((schedule) => schedule.id !== id))
-  }
+    setSchedules(schedules.filter((schedule) => schedule.id !== id));
+  };
 
   const getFrequencyText = (frequency: ScheduleFrequency): string => {
     switch (frequency) {
       case "once":
-        return language === "gu" ? "એક વખત" : language === "hi" ? "एक बार" : "Once"
+        return language === "gu"
+          ? "એક વખત"
+          : language === "hi"
+            ? "एक बार"
+            : "Once";
       case "daily":
-        return language === "gu" ? "દરરોજ" : language === "hi" ? "दैनिक" : "Daily"
+        return language === "gu"
+          ? "દરરોજ"
+          : language === "hi"
+            ? "दैनिक"
+            : "Daily";
       case "weekly":
-        return language === "gu" ? "સાપ્તાહિક" : language === "hi" ? "साप्ताहिक" : "Weekly"
+        return language === "gu"
+          ? "સાપ્તાહિક"
+          : language === "hi"
+            ? "साप्ताहिक"
+            : "Weekly";
       case "monthly":
-        return language === "gu" ? "માસિક" : language === "hi" ? "मासिक" : "Monthly"
+        return language === "gu"
+          ? "માસિક"
+          : language === "hi"
+            ? "मासिक"
+            : "Monthly";
       default:
-        return frequency
+        return frequency;
     }
-  }
+  };
 
   const getActionText = (action: ScheduleAction): string => {
     switch (action) {
       case "generate":
-        return language === "gu" ? "જનરેટ" : language === "hi" ? "जनरेट" : "Generate"
+        return language === "gu"
+          ? "જનરેટ"
+          : language === "hi"
+            ? "जनरेट"
+            : "Generate";
       case "share":
-        return language === "gu" ? "શેર" : language === "hi" ? "शेयर" : "Share"
+        return language === "gu" ? "શેર" : language === "hi" ? "शेयर" : "Share";
       case "notify":
-        return language === "gu" ? "નોટિફાય" : language === "hi" ? "नोटिफाई" : "Notify"
+        return language === "gu"
+          ? "નોટિફાય"
+          : language === "hi"
+            ? "नोटिफाई"
+            : "Notify";
       default:
-        return action
+        return action;
     }
-  }
+  };
 
   const getActionIcon = (action: ScheduleAction) => {
     switch (action) {
       case "generate":
-        return <Clock className="h-4 w-4" />
+        return <Clock className="h-4 w-4" />;
       case "share":
-        return <Share2 className="h-4 w-4" />
+        return <Share2 className="h-4 w-4" />;
       case "notify":
-        return <Bell className="h-4 w-4" />
+        return <Bell className="h-4 w-4" />;
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" className="w-full">
           <Repeat className="h-4 w-4 mr-2" />
-          {language === "gu" ? "શેડ્યૂલ અને ઓટોમેશન" : language === "hi" ? "शेड्यूल और ऑटोमेशन" : "Schedule & Automation"}
+          {language === "gu"
+            ? "શેડ્યૂલ અને ઓટોમેશન"
+            : language === "hi"
+              ? "शेड्यूल और ऑटोमेशन"
+              : "Schedule & Automation"}
         </Button>
       </DialogTrigger>
       <DialogContent
@@ -151,26 +194,44 @@ export function ScheduleAutomation() {
       >
         <DialogHeader>
           <DialogTitle>
-            {language === "gu" ? "શેડ્યૂલ અને ઓટોમેશન" : language === "hi" ? "शेड्यूल और ऑटोमेशन" : "Schedule & Automation"}
+            {language === "gu"
+              ? "શેડ્યૂલ અને ઓટોમેશન"
+              : language === "hi"
+                ? "शेड्यूल और ऑटोमेशन"
+                : "Schedule & Automation"}
           </DialogTitle>
         </DialogHeader>
 
-        <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as any)}>
+        <Tabs
+          value={activeTab}
+          onValueChange={(value) => setActiveTab(value as any)}
+        >
           <TabsList className="grid w-full grid-cols-2 mb-4">
             <TabsTrigger value="schedules">
               <Clock className="h-4 w-4 mr-2" />
-              {language === "gu" ? "મારા શેડ્યૂલ" : language === "hi" ? "मेरे शेड्यूल" : "My Schedules"}
+              {language === "gu"
+                ? "મારા શેડ્યૂલ"
+                : language === "hi"
+                  ? "मेरे शेड्यूल"
+                  : "My Schedules"}
             </TabsTrigger>
             <TabsTrigger value="create">
               <Plus className="h-4 w-4 mr-2" />
-              {language === "gu" ? "નવું બનાવો" : language === "hi" ? "नया बनाएं" : "Create New"}
+              {language === "gu"
+                ? "નવું બનાવો"
+                : language === "hi"
+                  ? "नया बनाएं"
+                  : "Create New"}
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="schedules" className="space-y-4">
             {schedules.length > 0 ? (
               schedules.map((schedule) => (
-                <div key={schedule.id} className={`border rounded-lg p-4 ${!schedule.isActive ? "opacity-60" : ""}`}>
+                <div
+                  key={schedule.id}
+                  className={`border rounded-lg p-4 ${!schedule.isActive ? "opacity-60" : ""}`}
+                >
                   <div className="flex justify-between items-start mb-2">
                     <div>
                       <h3 className="font-medium">{schedule.name}</h3>
@@ -179,12 +240,23 @@ export function ScheduleAutomation() {
                         {getFrequencyText(schedule.frequency)}
                         <span className="mx-1">•</span>
                         {getActionIcon(schedule.action)}
-                        <span className="ml-1">{getActionText(schedule.action)}</span>
+                        <span className="ml-1">
+                          {getActionText(schedule.action)}
+                        </span>
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Switch checked={schedule.isActive} onCheckedChange={() => handleToggleSchedule(schedule.id)} />
-                      <Button variant="ghost" size="icon" onClick={() => handleDeleteSchedule(schedule.id)}>
+                      <Switch
+                        checked={schedule.isActive}
+                        onCheckedChange={() =>
+                          handleToggleSchedule(schedule.id)
+                        }
+                      />
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => handleDeleteSchedule(schedule.id)}
+                      >
                         <Trash2 className="h-4 w-4 text-destructive" />
                       </Button>
                     </div>
@@ -193,15 +265,25 @@ export function ScheduleAutomation() {
                   <div className="grid grid-cols-2 gap-2 text-sm">
                     <div>
                       <span className="text-muted-foreground">
-                        {language === "gu" ? "સમય:" : language === "hi" ? "समय:" : "Time:"}
+                        {language === "gu"
+                          ? "સમય:"
+                          : language === "hi"
+                            ? "समय:"
+                            : "Time:"}
                       </span>
                       <span className="ml-1 font-medium">{schedule.time}</span>
                     </div>
                     <div>
                       <span className="text-muted-foreground">
-                        {language === "gu" ? "શરૂઆત:" : language === "hi" ? "शुरुआत:" : "Start:"}
+                        {language === "gu"
+                          ? "શરૂઆત:"
+                          : language === "hi"
+                            ? "शुरुआत:"
+                            : "Start:"}
                       </span>
-                      <span className="ml-1 font-medium">{schedule.startDate.toLocaleDateString()}</span>
+                      <span className="ml-1 font-medium">
+                        {schedule.startDate.toLocaleDateString()}
+                      </span>
                     </div>
                   </div>
 
@@ -242,12 +324,18 @@ export function ScheduleAutomation() {
           <TabsContent value="create" className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="schedule-name">
-                {language === "gu" ? "શેડ્યૂલનું નામ" : language === "hi" ? "शेड्यूल का नाम" : "Schedule Name"}
+                {language === "gu"
+                  ? "શેડ્યૂલનું નામ"
+                  : language === "hi"
+                    ? "शेड्यूल का नाम"
+                    : "Schedule Name"}
               </Label>
               <Input
                 id="schedule-name"
                 value={newSchedule.name}
-                onChange={(e) => setNewSchedule({ ...newSchedule, name: e.target.value })}
+                onChange={(e) =>
+                  setNewSchedule({ ...newSchedule, name: e.target.value })
+                }
                 placeholder={
                   language === "gu"
                     ? "દૈનિક સવારનું પંચાંગ"
@@ -261,7 +349,11 @@ export function ScheduleAutomation() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="frequency">
-                  {language === "gu" ? "આવૃત્તિ" : language === "hi" ? "आवृत्ति" : "Frequency"}
+                  {language === "gu"
+                    ? "આવૃત્તિ"
+                    : language === "hi"
+                      ? "आवृत्ति"
+                      : "Frequency"}
                 </Label>
                 <select
                   id="frequency"
@@ -274,19 +366,45 @@ export function ScheduleAutomation() {
                     })
                   }
                 >
-                  <option value="once">{language === "gu" ? "એક વખત" : language === "hi" ? "एक बार" : "Once"}</option>
-                  <option value="daily">{language === "gu" ? "દરરોજ" : language === "hi" ? "दैनिक" : "Daily"}</option>
+                  <option value="once">
+                    {language === "gu"
+                      ? "એક વખત"
+                      : language === "hi"
+                        ? "एक बार"
+                        : "Once"}
+                  </option>
+                  <option value="daily">
+                    {language === "gu"
+                      ? "દરરોજ"
+                      : language === "hi"
+                        ? "दैनिक"
+                        : "Daily"}
+                  </option>
                   <option value="weekly">
-                    {language === "gu" ? "સાપ્તાહિક" : language === "hi" ? "साप्ताहिक" : "Weekly"}
+                    {language === "gu"
+                      ? "સાપ્તાહિક"
+                      : language === "hi"
+                        ? "साप्ताहिक"
+                        : "Weekly"}
                   </option>
                   <option value="monthly">
-                    {language === "gu" ? "માસિક" : language === "hi" ? "मासिक" : "Monthly"}
+                    {language === "gu"
+                      ? "માસિક"
+                      : language === "hi"
+                        ? "मासिक"
+                        : "Monthly"}
                   </option>
                 </select>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="action">{language === "gu" ? "ક્રિયા" : language === "hi" ? "क्रिया" : "Action"}</Label>
+                <Label htmlFor="action">
+                  {language === "gu"
+                    ? "ક્રિયા"
+                    : language === "hi"
+                      ? "क्रिया"
+                      : "Action"}
+                </Label>
                 <select
                   id="action"
                   className="w-full p-2 border rounded-md"
@@ -299,13 +417,25 @@ export function ScheduleAutomation() {
                   }
                 >
                   <option value="generate">
-                    {language === "gu" ? "પંચાંગ જનરેટ કરો" : language === "hi" ? "पंचांग जनरेट करें" : "Generate Panchang"}
+                    {language === "gu"
+                      ? "પંચાંગ જનરેટ કરો"
+                      : language === "hi"
+                        ? "पंचांग जनरेट करें"
+                        : "Generate Panchang"}
                   </option>
                   <option value="share">
-                    {language === "gu" ? "પંચાંગ શેર કરો" : language === "hi" ? "पंचांग शेयर करें" : "Share Panchang"}
+                    {language === "gu"
+                      ? "પંચાંગ શેર કરો"
+                      : language === "hi"
+                        ? "पंचांग शेयर करें"
+                        : "Share Panchang"}
                   </option>
                   <option value="notify">
-                    {language === "gu" ? "નોટિફિકેશન મોકલો" : language === "hi" ? "नोटिफिकेशन भेजें" : "Send Notification"}
+                    {language === "gu"
+                      ? "નોટિફિકેશન મોકલો"
+                      : language === "hi"
+                        ? "नोटिफिकेशन भेजें"
+                        : "Send Notification"}
                   </option>
                 </select>
               </div>
@@ -313,29 +443,50 @@ export function ScheduleAutomation() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>{language === "gu" ? "શરૂઆત તારીખ" : language === "hi" ? "शुरुआत तारीख" : "Start Date"}</Label>
+                <Label>
+                  {language === "gu"
+                    ? "શરૂઆત તારીખ"
+                    : language === "hi"
+                      ? "शुरुआत तारीख"
+                      : "Start Date"}
+                </Label>
                 <div className="border rounded-md p-2">
                   <Calendar
                     mode="single"
                     selected={newSchedule.startDate}
-                    onSelect={(date) => date && setNewSchedule({ ...newSchedule, startDate: date })}
+                    onSelect={(date) =>
+                      date &&
+                      setNewSchedule({ ...newSchedule, startDate: date })
+                    }
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="time">{language === "gu" ? "સમય" : language === "hi" ? "समय" : "Time"}</Label>
+                <Label htmlFor="time">
+                  {language === "gu"
+                    ? "સમય"
+                    : language === "hi"
+                      ? "समय"
+                      : "Time"}
+                </Label>
                 <Input
                   id="time"
                   type="time"
                   value={newSchedule.time}
-                  onChange={(e) => setNewSchedule({ ...newSchedule, time: e.target.value })}
+                  onChange={(e) =>
+                    setNewSchedule({ ...newSchedule, time: e.target.value })
+                  }
                 />
 
                 {newSchedule.action === "share" && (
                   <div className="mt-4 space-y-2">
                     <Label htmlFor="recipients">
-                      {language === "gu" ? "પ્રાપ્તકર્તાઓ" : language === "hi" ? "प्राप्तकर्ता" : "Recipients"}
+                      {language === "gu"
+                        ? "પ્રાપ્તકર્તાઓ"
+                        : language === "hi"
+                          ? "प्राप्तकर्ता"
+                          : "Recipients"}
                     </Label>
                     <Input
                       id="recipients"
@@ -344,7 +495,9 @@ export function ScheduleAutomation() {
                       onChange={(e) =>
                         setNewSchedule({
                           ...newSchedule,
-                          recipients: e.target.value.split(",").map((email) => email.trim()),
+                          recipients: e.target.value
+                            .split(",")
+                            .map((email) => email.trim()),
                         })
                       }
                     />
@@ -364,24 +517,37 @@ export function ScheduleAutomation() {
               <Switch
                 id="is-active"
                 checked={newSchedule.isActive}
-                onCheckedChange={(checked) => setNewSchedule({ ...newSchedule, isActive: checked })}
+                onCheckedChange={(checked) =>
+                  setNewSchedule({ ...newSchedule, isActive: checked })
+                }
               />
               <Label htmlFor="is-active">
-                {language === "gu" ? "શેડ્યૂલ સક્રિય કરો" : language === "hi" ? "शेड्यूल सक्रिय करें" : "Enable Schedule"}
+                {language === "gu"
+                  ? "શેડ્યૂલ સક્રિય કરો"
+                  : language === "hi"
+                    ? "शेड्यूल सक्रिय करें"
+                    : "Enable Schedule"}
               </Label>
             </div>
 
             <DialogFooter className="mt-4">
-              <Button onClick={handleCreateSchedule} disabled={!newSchedule.name}>
-                {language === "gu" ? "શેડ્યૂલ બનાવો" : language === "hi" ? "शेड्यूल बनाएं" : "Create Schedule"}
+              <Button
+                onClick={handleCreateSchedule}
+                disabled={!newSchedule.name}
+              >
+                {language === "gu"
+                  ? "શેડ્યૂલ બનાવો"
+                  : language === "hi"
+                    ? "शेड्यूल बनाएं"
+                    : "Create Schedule"}
               </Button>
             </DialogFooter>
           </TabsContent>
         </Tabs>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
 
 // Import the Plus icon
-import { Plus } from "lucide-react"
+import { Plus } from "lucide-react";

@@ -1,0 +1,13 @@
+# dependencies
+node_modules
+.pnpm-store
+
+# next.js
+.next
+out
+build
+
+# misc
+.cache
+coverage
+next-env.d.ts

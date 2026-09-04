@@ -1,9 +1,9 @@
 export type Festival = {
-  date: string // Format: DD/MM
-  name: string
-  description: string
-  type: "major" | "minor"
-}
+  date: string; // Format: DD/MM
+  name: string;
+  description: string;
+  type: "major" | "minor";
+};
 
 // This is a simplified list of Hindu festivals for 2025
 // In a production app, you would have a more comprehensive database
@@ -116,41 +116,48 @@ export const festivals: Festival[] = [
     description: "સૂર્ય ધનુ રાશિમાં પ્રવેશ કરે છે",
     type: "minor",
   },
-]
+];
 
 export function getTodaysFestival(): Festival | null {
-  const today = new Date()
-  const day = String(today.getDate()).padStart(2, "0")
-  const month = String(today.getMonth() + 1).padStart(2, "0")
-  const todayFormatted = `${day}/${month}`
+  const today = new Date();
+  const day = String(today.getDate()).padStart(2, "0");
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const todayFormatted = `${day}/${month}`;
 
-  return festivals.find((festival) => festival.date === todayFormatted) || null
+  return festivals.find((festival) => festival.date === todayFormatted) || null;
 }
 
 export function getUpcomingFestivals(count = 3): Festival[] {
-  const today = new Date()
-  const currentDay = today.getDate()
-  const currentMonth = today.getMonth() + 1
+  const today = new Date();
+  const currentDay = today.getDate();
+  const currentMonth = today.getMonth() + 1;
 
   // Sort festivals by how soon they will occur
   return festivals
     .map((festival) => {
-      const [day, month] = festival.date.split("/").map(Number)
-      let daysUntil = 0
+      const [day, month] = festival.date.split("/").map(Number);
+      let daysUntil = 0;
 
       // Calculate days until festival
-      if (month > currentMonth || (month === currentMonth && day > currentDay)) {
+      if (
+        month > currentMonth ||
+        (month === currentMonth && day > currentDay)
+      ) {
         // Festival is later this year
-        const festivalDate = new Date(today.getFullYear(), month - 1, day)
-        daysUntil = Math.ceil((festivalDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24))
+        const festivalDate = new Date(today.getFullYear(), month - 1, day);
+        daysUntil = Math.ceil(
+          (festivalDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+        );
       } else {
         // Festival is next year
-        const festivalDate = new Date(today.getFullYear() + 1, month - 1, day)
-        daysUntil = Math.ceil((festivalDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24))
+        const festivalDate = new Date(today.getFullYear() + 1, month - 1, day);
+        daysUntil = Math.ceil(
+          (festivalDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+        );
       }
 
-      return { ...festival, daysUntil }
+      return { ...festival, daysUntil };
     })
     .sort((a, b) => a.daysUntil - b.daysUntil)
-    .slice(0, count)
+    .slice(0, count);
 }

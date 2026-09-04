@@ -1,17 +1,22 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Check, Palette } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { useState, useEffect } from "react";
+import { Check, Palette } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export type ThemeOption = {
-  id: string
-  name: string
-  background: string
-  textColor: string
-  borderColor: string
-}
+  id: string;
+  name: string;
+  background: string;
+  textColor: string;
+  borderColor: string;
+};
 
 const themes: ThemeOption[] = [
   {
@@ -49,32 +54,32 @@ const themes: ThemeOption[] = [
     textColor: "#f5f5f5",
     borderColor: "#9e9e9e",
   },
-]
+];
 
 interface ThemeSelectorProps {
-  onChange: (theme: ThemeOption) => void
+  onChange: (theme: ThemeOption) => void;
 }
 
 export function ThemeSelector({ onChange }: ThemeSelectorProps) {
-  const [selectedTheme, setSelectedTheme] = useState<ThemeOption>(themes[0])
+  const [selectedTheme, setSelectedTheme] = useState<ThemeOption>(themes[0]);
 
   // Load theme from localStorage on mount
   useEffect(() => {
-    const savedThemeId = localStorage.getItem("panchang_theme")
+    const savedThemeId = localStorage.getItem("panchang_theme");
     if (savedThemeId) {
-      const theme = themes.find((t) => t.id === savedThemeId)
+      const theme = themes.find((t) => t.id === savedThemeId);
       if (theme) {
-        setSelectedTheme(theme)
-        onChange(theme)
+        setSelectedTheme(theme);
+        onChange(theme);
       }
     }
-  }, [onChange])
+  }, [onChange]);
 
   const handleSelectTheme = (theme: ThemeOption) => {
-    setSelectedTheme(theme)
-    onChange(theme)
-    localStorage.setItem("panchang_theme", theme.id)
-  }
+    setSelectedTheme(theme);
+    onChange(theme);
+    localStorage.setItem("panchang_theme", theme.id);
+  };
 
   return (
     <DropdownMenu>
@@ -92,7 +97,10 @@ export function ThemeSelector({ onChange }: ThemeSelectorProps) {
             className="flex items-center justify-between"
           >
             <div className="flex items-center">
-              <div className="w-4 h-4 rounded-full mr-2" style={{ backgroundColor: theme.background }} />
+              <div
+                className="w-4 h-4 rounded-full mr-2"
+                style={{ backgroundColor: theme.background }}
+              />
               <span>{theme.name}</span>
             </div>
             {selectedTheme.id === theme.id && <Check className="h-4 w-4" />}
@@ -100,5 +108,5 @@ export function ThemeSelector({ onChange }: ThemeSelectorProps) {
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

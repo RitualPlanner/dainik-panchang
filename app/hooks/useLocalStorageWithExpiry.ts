@@ -1,96 +1,96 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 
 type StorageItem<T> = {
-  value: T
-  expiry: number
-}
+  value: T;
+  expiry: number;
+};
 
 export function useLocalStorageWithExpiry<T>(
   key: string,
   defaultValue: T,
-  expiryInMinutes = 30,
+  expiryInMinutes = 30
 ): [T, (value: T) => void] {
   // Function to get stored value with expiry check
   const getStoredValue = (): T => {
     if (typeof window === "undefined") {
-      return defaultValue
+      return defaultValue;
     }
 
     try {
-      const item = window.localStorage.getItem(key)
+      const item = window.localStorage.getItem(key);
 
       // If no item exists, return default
       if (!item) {
-        return defaultValue
+        return defaultValue;
       }
 
-      const storedItem: StorageItem<T> = JSON.parse(item)
-      const now = new Date().getTime()
+      const storedItem: StorageItem<T> = JSON.parse(item);
+      const now = new Date().getTime();
 
       // Check if the item has expired
       if (now > storedItem.expiry) {
         // Item expired, remove it and return default
-        window.localStorage.removeItem(key)
-        return defaultValue
+        window.localStorage.removeItem(key);
+        return defaultValue;
       }
 
       // Item still valid, return its value
-      return storedItem.value
+      return storedItem.value;
     } catch (error) {
-      console.error("Error reading from localStorage:", error)
-      return defaultValue
+      console.error("Error reading from localStorage:", error);
+      return defaultValue;
     }
-  }
+  };
 
   // Initialize state with stored value or default
-  const [value, setValue] = useState<T>(getStoredValue)
+  const [value, setValue] = useState<T>(getStoredValue);
 
   // Update React state synchronously (instantly)
   const setStoredValue = (newValue: T): void => {
-    setValue(newValue)
-  }
+    setValue(newValue);
+  };
 
   // Debounced effect to write to localStorage after typing stops (500ms delay)
   useEffect(() => {
-    if (typeof window === "undefined") return
+    if (typeof window === "undefined") return;
 
     const timer = setTimeout(() => {
       try {
-        const now = new Date().getTime()
-        const expiryTime = now + expiryInMinutes * 60 * 1000
+        const now = new Date().getTime();
+        const expiryTime = now + expiryInMinutes * 60 * 1000;
 
         const item: StorageItem<T> = {
           value: value,
           expiry: expiryTime,
-        }
+        };
 
-        window.localStorage.setItem(key, JSON.stringify(item))
+        window.localStorage.setItem(key, JSON.stringify(item));
       } catch (error) {
-        console.error("Error writing to localStorage:", error)
+        console.error("Error writing to localStorage:", error);
       }
-    }, 500) // 500ms debounce delay
+    }, 500); // 500ms debounce delay
 
-    return () => clearTimeout(timer)
-  }, [value, key, expiryInMinutes])
+    return () => clearTimeout(timer);
+  }, [value, key, expiryInMinutes]);
 
   // Check for expiry on mount and set up interval to check periodically
   useEffect(() => {
     const checkExpiry = () => {
-      const storedValue = getStoredValue()
-      setValue(storedValue)
-    }
+      const storedValue = getStoredValue();
+      setValue(storedValue);
+    };
 
     // Check expiry on mount
-    checkExpiry()
+    checkExpiry();
 
     // Set up interval to check expiry every minute
-    const interval = setInterval(checkExpiry, 60 * 1000)
+    const interval = setInterval(checkExpiry, 60 * 1000);
 
     // Clean up interval on unmount
-    return () => clearInterval(interval)
-  }, [key])
+    return () => clearInterval(interval);
+  }, [key]);
 
-  return [value, setStoredValue]
+  return [value, setStoredValue];
 }

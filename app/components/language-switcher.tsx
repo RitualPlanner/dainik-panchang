@@ -1,25 +1,34 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Globe } from "lucide-react"
-import { useLanguage, type Language } from "../contexts/language-context"
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Globe } from "lucide-react";
+import { useLanguage, type Language } from "../contexts/language-context";
 
 export function LanguageSwitcher() {
-  const { language, setLanguage, t } = useLanguage()
+  const { language, setLanguage, t } = useLanguage();
 
   const languages = [
     { code: "gu", name: "ગુજરાતી" },
     { code: "hi", name: "हिंदी" },
     { code: "en", name: "English" },
-  ]
+  ];
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="sm">
           <Globe className="h-4 w-4 mr-2" />
-          {language === "gu" ? "ગુજરાતી" : language === "hi" ? "हिंदी" : "English"}
+          {language === "gu"
+            ? "ગુજરાતી"
+            : language === "hi"
+              ? "हिंदी"
+              : "English"}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
@@ -34,5 +43,5 @@ export function LanguageSwitcher() {
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }
