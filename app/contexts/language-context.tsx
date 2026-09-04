@@ -1,15 +1,21 @@
-"use client"
+"use client";
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  type ReactNode,
+} from "react";
 
 // Define available languages
-export type Language = "gu" | "hi" | "en"
+export type Language = "gu" | "hi" | "en";
 
 // Define translations interface
 export interface Translations {
   [key: string]: {
-    [key in Language]: string
-  }
+    [key in Language]: string;
+  };
 }
 
 // Create translations object
@@ -271,13 +277,13 @@ export const translations: Translations = {
     hi: "बैच जनरेट करें",
     en: "Batch Generate",
   },
-}
+};
 
 // Define context type
 interface LanguageContextType {
-  language: Language
-  setLanguage: (lang: Language) => void
-  t: (key: string) => string
+  language: Language;
+  setLanguage: (lang: Language) => void;
+  t: (key: string) => string;
 }
 
 // Create context with default values
@@ -285,38 +291,44 @@ const LanguageContext = createContext<LanguageContextType>({
   language: "gu",
   setLanguage: () => {},
   t: (key) => key,
-})
+});
 
 // Create provider component
 export function LanguageProvider({ children }: { children: ReactNode }) {
   // Initialize with stored language or default to Gujarati
-  const [language, setLanguage] = useState<Language>("gu")
+  const [language, setLanguage] = useState<Language>("gu");
 
   // Load language preference from localStorage on mount
   useEffect(() => {
-    const storedLanguage = localStorage.getItem("panchang_language") as Language
+    const storedLanguage = localStorage.getItem(
+      "panchang_language"
+    ) as Language;
     if (storedLanguage && ["gu", "hi", "en"].includes(storedLanguage)) {
-      setLanguage(storedLanguage)
+      setLanguage(storedLanguage);
     }
-  }, [])
+  }, []);
 
   // Save language preference to localStorage when it changes
   useEffect(() => {
-    localStorage.setItem("panchang_language", language)
-  }, [language])
+    localStorage.setItem("panchang_language", language);
+  }, [language]);
 
   // Translation function
   const t = (key: string): string => {
     if (translations[key] && translations[key][language]) {
-      return translations[key][language]
+      return translations[key][language];
     }
-    return key
-  }
+    return key;
+  };
 
-  return <LanguageContext.Provider value={{ language, setLanguage, t }}>{children}</LanguageContext.Provider>
+  return (
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+      {children}
+    </LanguageContext.Provider>
+  );
 }
 
 // Custom hook for using the language context
 export function useLanguage() {
-  return useContext(LanguageContext)
+  return useContext(LanguageContext);
 }

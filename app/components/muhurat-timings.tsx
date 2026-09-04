@@ -1,30 +1,31 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Badge } from "@/components/ui/badge"
-import { Clock } from "lucide-react"
-import { useLanguage } from "../contexts/language-context"
-import { convertToGujaratiNumerals } from "../utils/date-utils"
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Clock } from "lucide-react";
+import { useLanguage } from "../contexts/language-context";
+import { convertToGujaratiNumerals } from "../utils/date-utils";
 
 // Define muhurat types
-type MuhuratCategory = "travel" | "marriage" | "business" | "education" | "religious"
+type MuhuratCategory =
+  "travel" | "marriage" | "business" | "education" | "religious";
 
 type Muhurat = {
   name: {
-    gu: string
-    hi: string
-    en: string
-  }
-  time: string
-  quality: "excellent" | "good" | "neutral" | "avoid"
+    gu: string;
+    hi: string;
+    en: string;
+  };
+  time: string;
+  quality: "excellent" | "good" | "neutral" | "avoid";
   description: {
-    gu: string
-    hi: string
-    en: string
-  }
-}
+    gu: string;
+    hi: string;
+    en: string;
+  };
+};
 
 // Mock muhurat data for different categories
 const muhuratData: Record<MuhuratCategory, Muhurat[]> = {
@@ -290,44 +291,60 @@ const muhuratData: Record<MuhuratCategory, Muhurat[]> = {
       },
     },
   ],
-}
+};
 
 export function MuhuratTimings() {
-  const { language, t } = useLanguage()
-  const [category, setCategory] = useState<MuhuratCategory>("travel")
-  const currentYear = new Date().getFullYear()
+  const { language, t } = useLanguage();
+  const [category, setCategory] = useState<MuhuratCategory>("travel");
+  const currentYear = new Date().getFullYear();
 
   // Get quality badge variant
   const getQualityVariant = (quality: string) => {
     switch (quality) {
       case "excellent":
-        return "success"
+        return "success";
       case "good":
-        return "default"
+        return "default";
       case "neutral":
-        return "secondary"
+        return "secondary";
       case "avoid":
-        return "destructive"
+        return "destructive";
       default:
-        return "outline"
+        return "outline";
     }
-  }
+  };
 
   // Get quality text
   const getQualityText = (quality: string) => {
     switch (quality) {
       case "excellent":
-        return language === "gu" ? "શ્રેષ્ઠ" : language === "hi" ? "उत्तम" : "Excellent"
+        return language === "gu"
+          ? "શ્રેષ્ઠ"
+          : language === "hi"
+            ? "उत्तम"
+            : "Excellent";
       case "good":
-        return language === "gu" ? "સારું" : language === "hi" ? "अच्छा" : "Good"
+        return language === "gu"
+          ? "સારું"
+          : language === "hi"
+            ? "अच्छा"
+            : "Good";
       case "neutral":
-        return language === "gu" ? "સામાન્ય" : language === "hi" ? "सामान्य" : "Neutral"
+        return language === "gu"
+          ? "સામાન્ય"
+          : language === "hi"
+            ? "सामान्य"
+            : "Neutral";
       case "avoid":
-        return language === "gu" ? "ટાળો" : language === "hi" ? "टालें" : "Avoid"
+        return language === "gu"
+          ? "ટાળો"
+          : language === "hi"
+            ? "टालें"
+            : "Avoid";
       default:
-        return quality
+        return quality;
     }
-  }
+  };
 
   return (
     <Card>
@@ -338,44 +355,82 @@ export function MuhuratTimings() {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <Tabs value={category} onValueChange={(value) => setCategory(value as MuhuratCategory)}>
+        <Tabs
+          value={category}
+          onValueChange={(value) => setCategory(value as MuhuratCategory)}
+        >
           <div className="text-xs text-muted-foreground mb-3 text-center">
             {language === "gu"
               ? `મુહૂર્ત પ્રાધાન્ય ૨૦૨૫ માટે`
               : language === "hi"
-              ? `मुहूर्त प्राथमिकता २०२५ के लिए`
-              : `Muhurat Priority for ${currentYear}`}
+                ? `मुहूर्त प्राथमिकता २०२५ के लिए`
+                : `Muhurat Priority for ${currentYear}`}
           </div>
           <TabsList className="grid grid-cols-5 mb-4">
             <TabsTrigger value="travel">
-              {language === "gu" ? "પ્રવાસ" : language === "hi" ? "यात्रा" : "Travel"}
+              {language === "gu"
+                ? "પ્રવાસ"
+                : language === "hi"
+                  ? "यात्रा"
+                  : "Travel"}
             </TabsTrigger>
             <TabsTrigger value="marriage">
-              {language === "gu" ? "લગ્ન" : language === "hi" ? "विवाह" : "Marriage"}
+              {language === "gu"
+                ? "લગ્ન"
+                : language === "hi"
+                  ? "विवाह"
+                  : "Marriage"}
             </TabsTrigger>
             <TabsTrigger value="business">
-              {language === "gu" ? "વ્યાપાર" : language === "hi" ? "व्यापार" : "Business"}
+              {language === "gu"
+                ? "વ્યાપાર"
+                : language === "hi"
+                  ? "व्यापार"
+                  : "Business"}
             </TabsTrigger>
             <TabsTrigger value="education">
-              {language === "gu" ? "શિક્ષણ" : language === "hi" ? "शिक्षा" : "Education"}
+              {language === "gu"
+                ? "શિક્ષણ"
+                : language === "hi"
+                  ? "शिक्षा"
+                  : "Education"}
             </TabsTrigger>
             <TabsTrigger value="religious">
-              {language === "gu" ? "ધાર્મિક" : language === "hi" ? "धार्मिक" : "Religious"}
+              {language === "gu"
+                ? "ધાર્મિક"
+                : language === "hi"
+                  ? "धार्मिक"
+                  : "Religious"}
             </TabsTrigger>
           </TabsList>
 
           {Object.entries(muhuratData).map(([key, muhuratsForCategory]) => (
             <TabsContent key={key} value={key} className="space-y-4">
               {muhuratsForCategory.map((muhurat, index) => (
-                <div key={index} className="flex justify-between items-center border-b pb-2 last:border-0">
+                <div
+                  key={index}
+                  className="flex justify-between items-center border-b pb-2 last:border-0"
+                >
                   <div>
-                    <h4 className="font-medium">{muhurat.name[language as keyof typeof muhurat.name]}</h4>
+                    <h4 className="font-medium">
+                      {muhurat.name[language as keyof typeof muhurat.name]}
+                    </h4>
                     <p className="text-sm text-muted-foreground">
-                      {language === "gu" ? convertToGujaratiNumerals(muhurat.time) : muhurat.time}
+                      {language === "gu"
+                        ? convertToGujaratiNumerals(muhurat.time)
+                        : muhurat.time}
                     </p>
-                    <p className="text-sm mt-1">{muhurat.description[language as keyof typeof muhurat.description]}</p>
+                    <p className="text-sm mt-1">
+                      {
+                        muhurat.description[
+                          language as keyof typeof muhurat.description
+                        ]
+                      }
+                    </p>
                   </div>
-                  <Badge variant={getQualityVariant(muhurat.quality) as any}>{getQualityText(muhurat.quality)}</Badge>
+                  <Badge variant={getQualityVariant(muhurat.quality) as any}>
+                    {getQualityText(muhurat.quality)}
+                  </Badge>
                 </div>
               ))}
             </TabsContent>
@@ -383,5 +438,5 @@ export function MuhuratTimings() {
         </Tabs>
       </CardContent>
     </Card>
-  )
+  );
 }

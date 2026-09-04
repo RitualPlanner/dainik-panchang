@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useRef } from "react"
-import { Edit2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { useState, useEffect, useRef } from "react";
+import { Edit2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Dialog,
   DialogContent,
@@ -12,89 +12,95 @@ import {
   DialogTitle,
   DialogFooter,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { useLanguage } from "./contexts/language-context"
+} from "@/components/ui/dialog";
+import { useLanguage } from "./contexts/language-context";
 
 // Helper function to safely access localStorage
 const getLocalStorage = (key: string, defaultValue: string) => {
   if (typeof window !== "undefined") {
-    return localStorage.getItem(key) || defaultValue
+    return localStorage.getItem(key) || defaultValue;
   }
-  return defaultValue
-}
+  return defaultValue;
+};
 
 // Helper function to safely set localStorage
 const setLocalStorage = (key: string, value: string) => {
   if (typeof window !== "undefined") {
-    localStorage.setItem(key, value)
+    localStorage.setItem(key, value);
   }
-}
+};
 
 export default function VikramSamvat() {
-  const { t, language } = useLanguage()
+  const { t, language } = useLanguage();
 
   // Default values
-  const defaultLine1 = "વિક્રમ સંવત ૨૦૮૧ , ઉત્તરાયણ , વસંત ઋતુ , શાલિવાહન શકે ૧૯૪૬"
-  const defaultLine2 = "ક્રોધીનામ - અનલ નામ સંવત્સર"
+  const defaultLine1 =
+    "વિક્રમ સંવત ૨૦૮૧ , ઉત્તરાયણ , વસંત ઋતુ , શાલિવાહન શકે ૧૯૪૬";
+  const defaultLine2 = "ક્રોધીનામ - અનલ નામ સંવત્સર";
 
   // Retrieve stored values
-  const [line1, setLine1] = useState(defaultLine1)
-  const [line2, setLine2] = useState(defaultLine2)
+  const [line1, setLine1] = useState(defaultLine1);
+  const [line2, setLine2] = useState(defaultLine2);
 
   // Temp state for editing
-  const [tempLine1, setTempLine1] = useState("")
-  const [tempLine2, setTempLine2] = useState("")
-  const [isOpen, setIsOpen] = useState(false)
-  const [focusTarget, setFocusTarget] = useState<"line1" | "line2" | null>(null)
+  const [tempLine1, setTempLine1] = useState("");
+  const [tempLine2, setTempLine2] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [focusTarget, setFocusTarget] = useState<"line1" | "line2" | null>(
+    null
+  );
 
   // Refs for focusing
-  const line1InputRef = useRef<HTMLInputElement>(null)
-  const line2InputRef = useRef<HTMLInputElement>(null)
+  const line1InputRef = useRef<HTMLInputElement>(null);
+  const line2InputRef = useRef<HTMLInputElement>(null);
 
   // Initialize state once the component mounts
   useEffect(() => {
-    setLine1(getLocalStorage("vikramSamvatLine1", defaultLine1))
-    setLine2(getLocalStorage("vikramSamvatLine2", defaultLine2))
-  }, [])
+    setLine1(getLocalStorage("vikramSamvatLine1", defaultLine1));
+    setLine2(getLocalStorage("vikramSamvatLine2", defaultLine2));
+  }, []);
 
   // Update localStorage when values change
   useEffect(() => {
-    setLocalStorage("vikramSamvatLine1", line1)
-  }, [line1])
+    setLocalStorage("vikramSamvatLine1", line1);
+  }, [line1]);
 
   useEffect(() => {
-    setLocalStorage("vikramSamvatLine2", line2)
-  }, [line2])
+    setLocalStorage("vikramSamvatLine2", line2);
+  }, [line2]);
 
   // Focus management when dialog opens
   useEffect(() => {
     if (isOpen && focusTarget) {
       const timer = setTimeout(() => {
-        const input = focusTarget === "line1" ? line1InputRef.current : line2InputRef.current
+        const input =
+          focusTarget === "line1"
+            ? line1InputRef.current
+            : line2InputRef.current;
         if (input) {
-          input.focus()
-          const len = input.value.length
-          input.setSelectionRange(len, len)
+          input.focus();
+          const len = input.value.length;
+          input.setSelectionRange(len, len);
         }
-      }, 50)
-      return () => clearTimeout(timer)
+      }, 50);
+      return () => clearTimeout(timer);
     }
-  }, [isOpen, focusTarget])
+  }, [isOpen, focusTarget]);
 
   // Open dialog and load current lines
   const handleOpenDialog = (target: "line1" | "line2") => {
-    setTempLine1(line1)
-    setTempLine2(line2)
-    setFocusTarget(target)
-    setIsOpen(true)
-  }
+    setTempLine1(line1);
+    setTempLine2(line2);
+    setFocusTarget(target);
+    setIsOpen(true);
+  };
 
   // Save changes
   const handleSave = () => {
-    setLine1(tempLine1)
-    setLine2(tempLine2)
-    setIsOpen(false)
-  }
+    setLine1(tempLine1);
+    setLine2(tempLine2);
+    setIsOpen(false);
+  };
 
   // Translations for the Dialog
   const dialogTranslations = {
@@ -123,11 +129,11 @@ export default function VikramSamvat() {
       hi: "रद्द करें",
       en: "Cancel",
     },
-  }
+  };
 
   const getT = (key: keyof typeof dialogTranslations) => {
-    return dialogTranslations[key][language] || dialogTranslations[key]["en"]
-  }
+    return dialogTranslations[key][language] || dialogTranslations[key]["en"];
+  };
 
   return (
     <div className="space-y-1.5 mt-2 bg-amber-50/60 p-3 rounded-xl border border-amber-100/50 inline-block text-center max-w-full">
@@ -151,7 +157,10 @@ export default function VikramSamvat() {
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
-                <Label htmlFor="line1" className="text-amber-900 font-semibold text-xs md:text-sm text-left">
+                <Label
+                  htmlFor="line1"
+                  className="text-amber-900 font-semibold text-xs md:text-sm text-left"
+                >
                   {getT("line1Label")}
                 </Label>
                 <Input
@@ -163,7 +172,10 @@ export default function VikramSamvat() {
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="line2" className="text-amber-900 font-semibold text-xs md:text-sm text-left">
+                <Label
+                  htmlFor="line2"
+                  className="text-amber-900 font-semibold text-xs md:text-sm text-left"
+                >
                   {getT("line2Label")}
                 </Label>
                 <Input
@@ -206,5 +218,5 @@ export default function VikramSamvat() {
         </button>
       </div>
     </div>
-  )
+  );
 }

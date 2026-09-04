@@ -1,27 +1,32 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { BookOpen, HelpCircle, Info } from "lucide-react"
-import { useLanguage } from "../contexts/language-context"
-import { useScreenSize } from "../utils/responsive-utils"
+import { useState } from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { BookOpen, HelpCircle, Info } from "lucide-react";
+import { useLanguage } from "../contexts/language-context";
+import { useScreenSize } from "../utils/responsive-utils";
 
 // Define learning content types
 interface LearningContent {
-  id: string
+  id: string;
   title: {
-    gu: string
-    hi: string
-    en: string
-  }
+    gu: string;
+    hi: string;
+    en: string;
+  };
   content: {
-    gu: string
-    hi: string
-    en: string
-  }
-  category: "basics" | "elements" | "significance"
+    gu: string;
+    hi: string;
+    en: string;
+  };
+  category: "basics" | "elements" | "significance";
 }
 
 // Sample learning content
@@ -124,43 +129,66 @@ const learningContent: LearningContent[] = [
     },
     category: "significance",
   },
-]
+];
 
 export function LearningSection() {
-  const { language, t } = useLanguage()
-  const [activeCategory, setActiveCategory] = useState<"basics" | "elements" | "significance">("basics")
-  const screenSize = useScreenSize()
+  const { language, t } = useLanguage();
+  const [activeCategory, setActiveCategory] = useState<
+    "basics" | "elements" | "significance"
+  >("basics");
+  const screenSize = useScreenSize();
 
   // Filter content by category
-  const filteredContent = learningContent.filter((item) => item.category === activeCategory)
+  const filteredContent = learningContent.filter(
+    (item) => item.category === activeCategory
+  );
 
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center">
           <BookOpen className="h-5 w-5 mr-2" />
-          {language === "gu" ? "પંચાંગ શીખો" : language === "hi" ? "पंचांग सीखें" : "Learn Panchang"}
+          {language === "gu"
+            ? "પંચાંગ શીખો"
+            : language === "hi"
+              ? "पंचांग सीखें"
+              : "Learn Panchang"}
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <Tabs value={activeCategory} onValueChange={(value) => setActiveCategory(value as any)}>
+        <Tabs
+          value={activeCategory}
+          onValueChange={(value) => setActiveCategory(value as any)}
+        >
           <TabsList className="grid w-full grid-cols-3 mb-4">
             <TabsTrigger value="basics">
               <Info className="h-4 w-4 mr-1 md:mr-2" />
               <span className={screenSize.isMobile ? "text-xs" : ""}>
-                {language === "gu" ? "મૂળભૂત" : language === "hi" ? "मूलभूत" : "Basics"}
+                {language === "gu"
+                  ? "મૂળભૂત"
+                  : language === "hi"
+                    ? "मूलभूत"
+                    : "Basics"}
               </span>
             </TabsTrigger>
             <TabsTrigger value="elements">
               <HelpCircle className="h-4 w-4 mr-1 md:mr-2" />
               <span className={screenSize.isMobile ? "text-xs" : ""}>
-                {language === "gu" ? "તત્વો" : language === "hi" ? "तत्व" : "Elements"}
+                {language === "gu"
+                  ? "તત્વો"
+                  : language === "hi"
+                    ? "तत्व"
+                    : "Elements"}
               </span>
             </TabsTrigger>
             <TabsTrigger value="significance">
               <BookOpen className="h-4 w-4 mr-1 md:mr-2" />
               <span className={screenSize.isMobile ? "text-xs" : ""}>
-                {language === "gu" ? "મહત્વ" : language === "hi" ? "महत्व" : "Significance"}
+                {language === "gu"
+                  ? "મહત્વ"
+                  : language === "hi"
+                    ? "महत्व"
+                    : "Significance"}
               </span>
             </TabsTrigger>
           </TabsList>
@@ -173,7 +201,9 @@ export function LearningSection() {
                     {item.title[language as keyof typeof item.title]}
                   </AccordionTrigger>
                   <AccordionContent>
-                    <p className="text-sm">{item.content[language as keyof typeof item.content]}</p>
+                    <p className="text-sm">
+                      {item.content[language as keyof typeof item.content]}
+                    </p>
                   </AccordionContent>
                 </AccordionItem>
               ))}
@@ -182,5 +212,5 @@ export function LearningSection() {
         </Tabs>
       </CardContent>
     </Card>
-  )
+  );
 }

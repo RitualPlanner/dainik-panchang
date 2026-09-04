@@ -11,6 +11,7 @@ Dainik-Panchang is a feature-rich web application designed to help users create 
 ## Features
 
 ### Core Features
+
 - **Panchang Information Input**: Manually enter all panchang details including:
   - Tithi (lunar day)
   - Tarikh (date formatting with Gujarati numerals)
@@ -21,7 +22,7 @@ Dainik-Panchang is a feature-rich web application designed to help users create 
   - Aaj Ni Rashi (today's zodiac sign)
   - Din Mahima (day significance & festivals)
 
-- **Date Management & Header Editing**: 
+- **Date Management & Header Editing**:
   - Interactive date picker with circular date selection
   - Automatic date formatting in Gujarati numerals (`૨૦૮૧`)
   - Customizable Vikram Samvat headers
@@ -34,6 +35,7 @@ Dainik-Panchang is a feature-rich web application designed to help users create 
   - Overlay selection (deity images, borders)
 
 ### Export & Sharing
+
 - **Image Download**: Download generated panchang as PNG image
 - **PDF Export**: Generate high-quality PDF documents
 - **QR Code Generation**: Create QR codes containing full panchang details
@@ -42,21 +44,25 @@ Dainik-Panchang is a feature-rich web application designed to help users create 
 - **Top-Center Toast Notifications**: Clean non-intrusive action feedback
 
 ### Data Management
+
 - **Image Upload & OCR**: Upload existing panchang images and automatically extract data using Tesseract.js
 - **Data Persistence**: Form data is automatically saved to localStorage for 30 minutes
 - **Auto-expiry**: Stored data automatically clears after 30 minutes of inactivity
 
 ### Multilingual & Dark Mode Support
+
 - **Multilingual UI**: Gujarati (ગુજરાતી), Hindi (हिंदी), and English
 - **Theme Support**: Seamless Light & Dark mode support across form inputs, dropdowns, and calendar pickers
 
 ### Responsive Design
+
 - Mobile-friendly interface
 - Tablet optimized layout
 - Desktop full-featured experience
 - Smooth responsive transitions
 
 ### Additional Features
+
 - **Theme Customization**: Choose from multiple visual themes
 - **Bold Field Selection**: Make specific fields bold in generated images
 - **Dynamic Year Detection**: Festivals and muhurat timings automatically update based on current year
@@ -78,23 +84,27 @@ Dainik-Panchang is a feature-rich web application designed to help users create 
 ## Getting Started
 
 ### Prerequisites
-- Node.js 18+ 
+
+- Node.js 18+
 - pnpm or npm package manager
 
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/RitualPlanner/dainik-panchang.git
 cd dainik-panchang
 ```
 
 2. Install dependencies:
+
 ```bash
 pnpm install
 ```
 
 3. Run the development server:
+
 ```bash
 pnpm dev
 ```
@@ -213,16 +223,19 @@ Add new fields to the form by modifying the FormData type and adding correspondi
 ## Troubleshooting
 
 ### OCR Not Working
+
 - Ensure image quality is clear
 - Try with a different image
 - Check browser console for errors
 
 ### PDF Not Generating
+
 - Verify jsPDF library is loaded
 - Try refreshing the page
 - Check browser permissions
 
 ### QR Code Not Displaying
+
 - Ensure form has valid data
 - Try generating again
 - Clear browser cache
@@ -247,6 +260,7 @@ For issues, suggestions, or contributions, please open an issue in the project r
 ## Version History
 
 ### v1.0.0 (Current)
+
 - Initial release
 - Core panchang generation features
 - Multilingual support

@@ -1,46 +1,55 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Cloud, CloudRain, Sun, Moon, Sunrise, Sunset, Wind, Thermometer } from "lucide-react"
-import { useLanguage } from "../contexts/language-context"
-import { convertToGujaratiNumerals } from "../utils/date-utils"
+import { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Cloud,
+  CloudRain,
+  Sun,
+  Moon,
+  Sunrise,
+  Sunset,
+  Wind,
+  Thermometer,
+} from "lucide-react";
+import { useLanguage } from "../contexts/language-context";
+import { convertToGujaratiNumerals } from "../utils/date-utils";
 
 // Define weather data type
 interface WeatherData {
-  location: string
-  temperature: number
-  condition: string
-  humidity: number
-  windSpeed: number
-  sunrise: string
-  sunset: string
-  moonPhase: string
+  location: string;
+  temperature: number;
+  condition: string;
+  humidity: number;
+  windSpeed: number;
+  sunrise: string;
+  sunset: string;
+  moonPhase: string;
   forecast: {
-    date: string
-    condition: string
-    maxTemp: number
-    minTemp: number
-  }[]
+    date: string;
+    condition: string;
+    maxTemp: number;
+    minTemp: number;
+  }[];
 }
 
 export function WeatherIntegration() {
-  const { language, t } = useLanguage()
-  const [weatherData, setWeatherData] = useState<WeatherData | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const { language, t } = useLanguage();
+  const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   // Fetch weather data
   useEffect(() => {
     const fetchWeatherData = async () => {
-      setIsLoading(true)
-      setError(null)
+      setIsLoading(true);
+      setError(null);
 
       try {
         // In a real implementation, this would be an API call
         // For demo purposes, we'll use mock data
-        await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API delay
+        await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API delay
 
         const mockWeatherData: WeatherData = {
           location: "Ahmedabad, Gujarat",
@@ -65,76 +74,108 @@ export function WeatherIntegration() {
               minTemp: 23,
             },
           ],
-        }
+        };
 
-        setWeatherData(mockWeatherData)
+        setWeatherData(mockWeatherData);
       } catch (err) {
-        console.error("Error fetching weather data:", err)
-        setError("Failed to fetch weather data")
+        console.error("Error fetching weather data:", err);
+        setError("Failed to fetch weather data");
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }
+    };
 
-    fetchWeatherData()
-  }, [])
+    fetchWeatherData();
+  }, []);
 
   // Get weather icon based on condition
   const getWeatherIcon = (condition: string) => {
     switch (condition.toLowerCase()) {
       case "sunny":
-        return <Sun className="h-6 w-6 text-yellow-500" />
+        return <Sun className="h-6 w-6 text-yellow-500" />;
       case "cloudy":
       case "partly cloudy":
-        return <Cloud className="h-6 w-6 text-gray-500" />
+        return <Cloud className="h-6 w-6 text-gray-500" />;
       case "rainy":
-        return <CloudRain className="h-6 w-6 text-blue-500" />
+        return <CloudRain className="h-6 w-6 text-blue-500" />;
       default:
-        return <Sun className="h-6 w-6 text-yellow-500" />
+        return <Sun className="h-6 w-6 text-yellow-500" />;
     }
-  }
+  };
 
   // Format temperature based on language
   const formatTemperature = (temp: number): string => {
     if (language === "gu") {
-      return `${convertToGujaratiNumerals(temp.toString())}°C`
+      return `${convertToGujaratiNumerals(temp.toString())}°C`;
     } else {
-      return `${temp}°C`
+      return `${temp}°C`;
     }
-  }
+  };
 
   // Format time based on language
   const formatTime = (time: string): string => {
     if (language === "gu") {
-      return convertToGujaratiNumerals(time)
+      return convertToGujaratiNumerals(time);
     } else {
-      return time
+      return time;
     }
-  }
+  };
 
   // Translate moon phase
   const translateMoonPhase = (phase: string): string => {
     switch (phase) {
       case "New Moon":
-        return language === "gu" ? "અમાસ" : language === "hi" ? "अमावस्या" : phase
+        return language === "gu"
+          ? "અમાસ"
+          : language === "hi"
+            ? "अमावस्या"
+            : phase;
       case "Waxing Crescent":
-        return language === "gu" ? "શુક્લ પક્ષ (વધતો ચંદ્ર)" : language === "hi" ? "शुक्ल पक्ष (बढ़ता चंद्र)" : phase
+        return language === "gu"
+          ? "શુક્લ પક્ષ (વધતો ચંદ્ર)"
+          : language === "hi"
+            ? "शुक्ल पक्ष (बढ़ता चंद्र)"
+            : phase;
       case "First Quarter":
-        return language === "gu" ? "પ્રથમ ચતુર્થાંશ" : language === "hi" ? "प्रथम चतुर्थांश" : phase
+        return language === "gu"
+          ? "પ્રથમ ચતુર્થાંશ"
+          : language === "hi"
+            ? "प्रथम चतुर्थांश"
+            : phase;
       case "Waxing Gibbous":
-        return language === "gu" ? "શુક્લ પક્ષ (પૂર્ણિમા તરફ)" : language === "hi" ? "शुक्ल पक्ष (पूर्णिमा की ओर)" : phase
+        return language === "gu"
+          ? "શુક્લ પક્ષ (પૂર્ણિમા તરફ)"
+          : language === "hi"
+            ? "शुक्ल पक्ष (पूर्णिमा की ओर)"
+            : phase;
       case "Full Moon":
-        return language === "gu" ? "પૂર્ણિમા" : language === "hi" ? "पूर्णिमा" : phase
+        return language === "gu"
+          ? "પૂર્ણિમા"
+          : language === "hi"
+            ? "पूर्णिमा"
+            : phase;
       case "Waning Gibbous":
-        return language === "gu" ? "કૃષ્ણ પક્ષ (ઘટતો ચંદ્ર)" : language === "hi" ? "कृष्ण पक्ष (घटता चंद्र)" : phase
+        return language === "gu"
+          ? "કૃષ્ણ પક્ષ (ઘટતો ચંદ્ર)"
+          : language === "hi"
+            ? "कृष्ण पक्ष (घटता चंद्र)"
+            : phase;
       case "Last Quarter":
-        return language === "gu" ? "અંતિમ ચતુર્થાંશ" : language === "hi" ? "अंतिम चतुर्थांश" : phase
+        return language === "gu"
+          ? "અંતિમ ચતુર્થાંશ"
+          : language === "hi"
+            ? "अंतिम चतुर्थांश"
+            : phase;
       case "Waning Crescent":
-        return language === "gu" ? "કૃષ્ણ પક્ષ (અમાસ તરફ)" : language === "hi" ? "कृष्ण पक्ष (अमावस्या की ओर)" : phase
+        return language === "gu"
+          ? "કૃષ્ણ પક્ષ (અમાસ તરફ)"
+          : language === "hi"
+            ? "कृष्ण पक्ष (अमावस्या की ओर)"
+            : phase;
       default:
-        return phase
+        return phase;
     }
-  }
+  };
 
   if (isLoading) {
     return (
@@ -142,7 +183,11 @@ export function WeatherIntegration() {
         <CardHeader>
           <CardTitle className="flex items-center">
             <Sun className="h-5 w-5 mr-2" />
-            {language === "gu" ? "હવામાન" : language === "hi" ? "मौसम" : "Weather"}
+            {language === "gu"
+              ? "હવામાન"
+              : language === "hi"
+                ? "मौसम"
+                : "Weather"}
           </CardTitle>
         </CardHeader>
         <CardContent className="flex justify-center items-center py-8">
@@ -153,7 +198,7 @@ export function WeatherIntegration() {
           </div>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   if (error || !weatherData) {
@@ -162,7 +207,11 @@ export function WeatherIntegration() {
         <CardHeader>
           <CardTitle className="flex items-center">
             <Sun className="h-5 w-5 mr-2" />
-            {language === "gu" ? "હવામાન" : language === "hi" ? "मौसम" : "Weather"}
+            {language === "gu"
+              ? "હવામાન"
+              : language === "hi"
+                ? "मौसम"
+                : "Weather"}
           </CardTitle>
         </CardHeader>
         <CardContent className="text-center py-4">
@@ -175,7 +224,7 @@ export function WeatherIntegration() {
           </p>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   return (
@@ -184,7 +233,11 @@ export function WeatherIntegration() {
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center">
             <Sun className="h-5 w-5 mr-2" />
-            {language === "gu" ? "હવામાન" : language === "hi" ? "मौसम" : "Weather"}
+            {language === "gu"
+              ? "હવામાન"
+              : language === "hi"
+                ? "मौसम"
+                : "Weather"}
           </div>
           <Badge variant="outline">{weatherData.location}</Badge>
         </CardTitle>
@@ -194,7 +247,9 @@ export function WeatherIntegration() {
           <div className="flex items-center mb-4 md:mb-0">
             {getWeatherIcon(weatherData.condition)}
             <div className="ml-2">
-              <h3 className="text-2xl font-bold">{formatTemperature(weatherData.temperature)}</h3>
+              <h3 className="text-2xl font-bold">
+                {formatTemperature(weatherData.temperature)}
+              </h3>
               <p className="text-sm text-muted-foreground">
                 {language === "gu"
                   ? weatherData.condition === "Sunny"
@@ -267,7 +322,11 @@ export function WeatherIntegration() {
 
           <div className="mt-4">
             <h4 className="text-sm font-medium mb-2">
-              {language === "gu" ? "આગાહી" : language === "hi" ? "पूर्वानुमान" : "Forecast"}
+              {language === "gu"
+                ? "આગાહી"
+                : language === "hi"
+                  ? "पूर्वानुमान"
+                  : "Forecast"}
             </h4>
             <div className="grid grid-cols-2 gap-2">
               {weatherData.forecast.map((day, index) => (
@@ -309,5 +368,5 @@ export function WeatherIntegration() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

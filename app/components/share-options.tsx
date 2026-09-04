@@ -1,74 +1,87 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Share2, Copy, Facebook, Send, MessageCircle } from "lucide-react"
-import { generateFormattedText } from "../utils"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Share2, Copy, Facebook, Send, MessageCircle } from "lucide-react";
+import { generateFormattedText } from "../utils";
 
 interface ShareOptionsProps {
-  formData: any
-  boldFields: string[]
+  formData: any;
+  boldFields: string[];
 }
 
 export function ShareOptions({ formData, boldFields }: ShareOptionsProps) {
-  const [dialogOpen, setDialogOpen] = useState(false)
-  const [phoneNumber, setPhoneNumber] = useState("")
-  const [message, setMessage] = useState("")
-  const [copied, setCopied] = useState(false)
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [message, setMessage] = useState("");
+  const [copied, setCopied] = useState(false);
 
   const handleCopyLink = async () => {
-    const formattedText = generateFormattedText(formData, boldFields)
+    const formattedText = generateFormattedText(formData, boldFields);
     const shareUrl = `${window.location.origin}?share=${encodeURIComponent(
-      btoa(JSON.stringify({ formData, boldFields })),
-    )}`
+      btoa(JSON.stringify({ formData, boldFields }))
+    )}`;
 
     try {
-      await navigator.clipboard.writeText(shareUrl)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      console.error("Failed to copy link:", err)
+      console.error("Failed to copy link:", err);
     }
-  }
+  };
 
   const shareOnWhatsApp = () => {
-    const formattedText = generateFormattedText(formData, boldFields)
-    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(formattedText)}`
-    window.open(whatsappUrl, "_blank")
-  }
+    const formattedText = generateFormattedText(formData, boldFields);
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(formattedText)}`;
+    window.open(whatsappUrl, "_blank");
+  };
 
   const shareOnFacebook = () => {
     const shareUrl = `${window.location.origin}?share=${encodeURIComponent(
-      btoa(JSON.stringify({ formData, boldFields })),
-    )}`
-    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`
-    window.open(facebookUrl, "_blank")
-  }
+      btoa(JSON.stringify({ formData, boldFields }))
+    )}`;
+    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+    window.open(facebookUrl, "_blank");
+  };
 
   const shareOnTelegram = () => {
-    const formattedText = generateFormattedText(formData, boldFields)
+    const formattedText = generateFormattedText(formData, boldFields);
     const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(
-      window.location.origin,
-    )}&text=${encodeURIComponent(formattedText)}`
-    window.open(telegramUrl, "_blank")
-  }
+      window.location.origin
+    )}&text=${encodeURIComponent(formattedText)}`;
+    window.open(telegramUrl, "_blank");
+  };
 
   const sendDirectMessage = () => {
-    if (!phoneNumber) return
+    if (!phoneNumber) return;
 
-    const formattedText = generateFormattedText(formData, boldFields)
-    const customMessage = message ? `${message}\n\n${formattedText}` : formattedText
+    const formattedText = generateFormattedText(formData, boldFields);
+    const customMessage = message
+      ? `${message}\n\n${formattedText}`
+      : formattedText;
     const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber.replace(
       /\D/g,
-      "",
-    )}&text=${encodeURIComponent(customMessage)}`
-    window.open(whatsappUrl, "_blank")
-    setDialogOpen(false)
-  }
+      ""
+    )}&text=${encodeURIComponent(customMessage)}`;
+    window.open(whatsappUrl, "_blank");
+    setDialogOpen(false);
+  };
 
   return (
     <div className="flex gap-2">
@@ -134,5 +147,5 @@ export function ShareOptions({ formData, boldFields }: ShareOptionsProps) {
         </DialogContent>
       </Dialog>
     </div>
-  )
+  );
 }

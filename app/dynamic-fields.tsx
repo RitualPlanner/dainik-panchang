@@ -1,29 +1,32 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Plus, Minus } from "lucide-react"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Plus, Minus } from "lucide-react";
 
 interface DynamicFieldsProps {
-  fields: string[]
-  onChange: (fields: string[]) => void
+  fields: string[];
+  onChange: (fields: string[]) => void;
 }
 
-export default function DynamicFields({ fields, onChange }: DynamicFieldsProps) {
+export default function DynamicFields({
+  fields,
+  onChange,
+}: DynamicFieldsProps) {
   const addField = () => {
-    onChange([...fields, ""])
-  }
+    onChange([...fields, ""]);
+  };
 
   const removeField = (index: number) => {
-    const newFields = fields.filter((_, i) => i !== index)
-    onChange(newFields)
-  }
+    const newFields = fields.filter((_, i) => i !== index);
+    onChange(newFields);
+  };
 
   const updateField = (index: number, value: string) => {
-    const newFields = [...fields]
-    newFields[index] = value
-    onChange(newFields)
-  }
+    const newFields = [...fields];
+    newFields[index] = value;
+    onChange(newFields);
+  };
 
   return (
     <div className="space-y-4">
@@ -42,11 +45,15 @@ export default function DynamicFields({ fields, onChange }: DynamicFieldsProps) 
             onChange={(e) => updateField(index, e.target.value)}
             placeholder={`દિન મહિમા ${index + 1}`}
           />
-          <Button onClick={() => removeField(index)} variant="destructive" size="icon">
+          <Button
+            onClick={() => removeField(index)}
+            variant="destructive"
+            size="icon"
+          >
             <Minus className="h-4 w-4" />
           </Button>
         </div>
       ))}
     </div>
-  )
+  );
 }
