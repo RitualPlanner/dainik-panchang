@@ -406,7 +406,7 @@ export default function PanchangForm() {
         <div className="flex flex-col border-b border-amber-200/40 pb-6 text-center">
           <div className="flex items-center justify-between w-full mb-4 sm:mb-2">
             <img
-              src="https://res.cloudinary.com/db6qh4jsv/image/upload/v1784730633/image1_s0xbfv.png"
+              src="https://res.cloudinary.com/db6qh4jsv/image/upload/v1788498372/dainik_panchang_vhzo24.png"
               alt="Dainik Panchang Logo"
               className="h-10 w-10 sm:h-12 sm:w-12 md:h-16 md:w-16 object-contain hover:scale-105 transition-all duration-200 bg-white p-1 rounded-xl border border-amber-200/40 shadow-sm shrink-0"
             />
@@ -449,7 +449,7 @@ export default function PanchangForm() {
             >
               {t("panchangHeader")}
             </h2>
-            <div className="mt-2 w-full flex justify-center">
+            <div className="w-full flex justify-center">
               <EditableText />
             </div>
           </div>
