@@ -137,10 +137,10 @@ export const generateImage = async (
   y += 40;
 
   // Din mahima items - left-aligned
-  ctx.font = "20px Arial";
   ctx.textAlign = "left";
   formData.dinMahima.forEach((item: string) => {
     if (item.trim()) {
+      setFont("dinMahima");
       ctx.fillText(`- ${item}`, 50, y);
       y += 30;
     }
@@ -207,7 +207,7 @@ export const generateFormattedText = (
   // Add din mahima items
   formData.dinMahima.forEach((item: string) => {
     if (item.trim()) {
-      text += `- ${item}\n`;
+      text += `- ${boldFields.includes("dinMahima") ? bold(item) : item}\n`;
     }
   });
 

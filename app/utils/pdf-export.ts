@@ -108,9 +108,9 @@ export async function generatePDF(formData: any, boldFields: string[]) {
   y += 15;
 
   // Din mahima items
-  doc.setFont("helvetica", "normal");
   formData.dinMahima.forEach((item: string) => {
     if (item.trim()) {
+      setFont("dinMahima");
       doc.text(`- ${item}`, 30, y);
       y += 10;
     }
