@@ -404,7 +404,7 @@ export default function PanchangForm() {
     <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-100/40 via-amber-50/60 to-stone-100/90 dark:from-stone-800/40 dark:via-stone-900/60 dark:to-stone-950/90 py-8 px-4 md:px-8 flex items-center justify-center transition-colors duration-300">
       <Card className="relative max-w-7xl w-full mx-auto p-6 md:p-10 space-y-6 md:space-y-8 glass-panel border border-amber-200/50 dark:border-stone-800 shadow-2xl rounded-3xl transition-colors duration-300">
         <img
-          src="https://res.cloudinary.com/db6qh4jsv/image/upload/v1784730633/image1_s0xbfv.png"
+          src="https://res.cloudinary.com/db6qh4jsv/image/upload/v1788498372/dainik_panchang_vhzo24.png"
           alt="Dainik Panchang Logo"
           className="absolute top-4 left-4 md:top-6 md:left-6 h-12 w-12 md:h-16 md:w-16 object-contain hover:scale-105 transition-all duration-200 z-10 bg-white p-1.5 rounded-xl border border-amber-200/40 shadow-sm"
         />

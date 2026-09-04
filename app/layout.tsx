@@ -42,11 +42,11 @@ export const metadata = {
   description:
     "Create, customize, and share daily panchang details including tithi, nakshatra, yog, karan, sunrise/sunset times, and more. Features multilingual support, QR code generation, and PDF export.",
   icons: {
-    icon: "https://res.cloudinary.com/db6qh4jsv/image/upload/v1784730633/image1_s0xbfv.png",
+    icon: "https://res.cloudinary.com/db6qh4jsv/image/upload/v1788498372/dainik_panchang_vhzo24.png",
     shortcut:
-      "https://res.cloudinary.com/db6qh4jsv/image/upload/v1784730633/image1_s0xbfv.png",
+      "https://res.cloudinary.com/db6qh4jsv/image/upload/v1788498372/dainik_panchang_vhzo24.png",
     apple:
-      "https://res.cloudinary.com/db6qh4jsv/image/upload/v1784730633/image1_s0xbfv.png",
+      "https://res.cloudinary.com/db6qh4jsv/image/upload/v1788498372/dainik_panchang_vhzo24.png",
   },
-  generator: "v0.app",
+  generator: "Dainik-Panchang",
 };
