@@ -173,7 +173,7 @@ export const generateFormattedText = (
   // Add header - centered
   text += bold("|| શ્રી ગણેશાય નમઃ ||") + "\n\n";
   text += bold("દૈનિક પંચાંગ") + "\n";
-  text += "............................\n\n";
+  text += "............................\n";
   text += line1;
   text += "\n";
   text += line2;
