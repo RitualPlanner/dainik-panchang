@@ -403,40 +403,44 @@ export default function PanchangForm() {
   return (
     <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-100/40 via-amber-50/60 to-stone-100/90 dark:from-stone-800/40 dark:via-stone-900/60 dark:to-stone-950/90 py-8 px-4 md:px-8 flex items-center justify-center transition-colors duration-300">
       <Card className="relative max-w-7xl w-full mx-auto p-6 md:p-10 space-y-6 md:space-y-8 glass-panel border border-amber-200/50 dark:border-stone-800 shadow-2xl rounded-3xl transition-colors duration-300">
-        <img
-          src="https://res.cloudinary.com/db6qh4jsv/image/upload/v1784730633/image1_s0xbfv.png"
-          alt="Dainik Panchang Logo"
-          className="absolute top-4 left-4 md:top-6 md:left-6 h-12 w-12 md:h-16 md:w-16 object-contain hover:scale-105 transition-all duration-200 z-10 bg-white p-1.5 rounded-xl border border-amber-200/40 shadow-sm"
-        />
-        <div className="absolute top-4 right-4 md:top-6 md:right-6 flex items-center gap-2 bg-white/70 dark:bg-stone-800/80 backdrop-blur-sm p-1.5 rounded-xl border border-amber-200/30 dark:border-stone-700/50 shadow-sm z-10">
-          {mounted && (
-            <>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-8 w-8 rounded-lg text-amber-800 dark:text-amber-200 hover:bg-amber-100/50 dark:hover:bg-stone-700/50 transition-colors"
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                title={
-                  theme === "dark"
-                    ? "Switch to Light Mode"
-                    : "Switch to Dark Mode"
-                }
-              >
-                {theme === "dark" ? (
-                  <Sun className="h-4 w-4 text-amber-500" />
-                ) : (
-                  <Moon className="h-4 w-4 text-amber-800" />
-                )}
-              </Button>
-              <div className="h-4 w-px bg-amber-400 dark:bg-stone-700" />
-            </>
-          )}
-          <LanguageSwitcher />
-        </div>
-        <div className="flex flex-col items-center gap-6 border-b border-amber-200/40 pb-6 text-center">
-          <div className="space-y-3 w-full flex flex-col items-center mt-6 md:mt-2">
+        <div className="flex flex-col border-b border-amber-200/40 pb-6 text-center">
+          <div className="flex items-center justify-between w-full mb-4 sm:mb-2">
+            <img
+              src="https://res.cloudinary.com/db6qh4jsv/image/upload/v1784730633/image1_s0xbfv.png"
+              alt="Dainik Panchang Logo"
+              className="h-10 w-10 sm:h-12 sm:w-12 md:h-16 md:w-16 object-contain hover:scale-105 transition-all duration-200 bg-white p-1 rounded-xl border border-amber-200/40 shadow-sm shrink-0"
+            />
+            <div className="flex items-center gap-1.5 sm:gap-2 bg-white/70 dark:bg-stone-800/80 backdrop-blur-sm p-1 sm:p-1.5 rounded-xl border border-amber-200/30 dark:border-stone-700/50 shadow-sm shrink-0">
+              {mounted && (
+                <>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 rounded-lg text-amber-800 dark:text-amber-200 hover:bg-amber-100/50 dark:hover:bg-stone-700/50 transition-colors"
+                    onClick={() =>
+                      setTheme(theme === "dark" ? "light" : "dark")
+                    }
+                    title={
+                      theme === "dark"
+                        ? "Switch to Light Mode"
+                        : "Switch to Dark Mode"
+                    }
+                  >
+                    {theme === "dark" ? (
+                      <Sun className="h-4 w-4 text-amber-500" />
+                    ) : (
+                      <Moon className="h-4 w-4 text-amber-800" />
+                    )}
+                  </Button>
+                  <div className="h-4 w-px bg-amber-400 dark:bg-stone-700" />
+                </>
+              )}
+              <LanguageSwitcher />
+            </div>
+          </div>
+          <div className="space-y-3 w-full flex flex-col items-center">
             <h1
-              className={`${getResponsiveFontSize(screenSize.width, 2.5)} font-black text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-orange-600 to-amber-600 tracking-wider drop-shadow-sm spiritual-glow`}
+              className={`${getResponsiveFontSize(screenSize.width, 2.5)} font-black text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-orange-600 to-amber-600 tracking-wider drop-shadow-sm spiritual-glow px-2`}
             >
               {t("ganeshInvocation")}
             </h1>
