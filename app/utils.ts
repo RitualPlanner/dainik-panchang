@@ -1,3 +1,6 @@
+export const getCopyrightText = () =>
+  `© ${new Date().getFullYear()} Dainik Panchang. All rights reserved.`;
+
 // Helper function to safely access localStorage
 const getLocalStorage = (key: string, defaultValue: string) => {
   if (typeof window !== "undefined") {
@@ -66,7 +69,11 @@ export const generateImage = async (
   // Add form data
   ctx.font = "20px Arial";
   ctx.textAlign = "left";
-  let y = 285;
+  let y = 240;
+
+  // Add separator before tithi
+  ctx.fillText("............................", 50, y);
+  y += 30;
 
   // Function to set font based on boldFields
   const setFont = (field: string) => {
@@ -141,6 +148,12 @@ export const generateImage = async (
     }
   });
 
+  // Copyright footer
+  ctx.font = "16px Arial";
+  ctx.textAlign = "center";
+  ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
+  ctx.fillText(getCopyrightText(), canvas.width / 2, canvas.height - 28);
+
   // Convert canvas to blob
   return new Promise<Blob>((resolve) => {
     canvas.toBlob(
@@ -175,9 +188,11 @@ export const generateFormattedText = (
   text += line1;
   text += "\n";
   text += line2;
-  text += "\n\n\n";
+  text += "\n\n";
 
-  // Rest of the function remains the same
+  // Add separator before tithi
+  text += "............................\n";
+
   // Add tithi and date
   text += `- ${boldFields.includes("tithi") ? bold(`તિથિ - ${formData.tithi}`) : `તિથિ - ${formData.tithi}`}\n`;
   text += `- ${boldFields.includes("tarikh") ? bold(`તા . ${formData.tarikh}`) : `તા . ${formData.tarikh}`}\n`;
@@ -207,6 +222,8 @@ export const generateFormattedText = (
       text += `- ${boldFields.includes("dinMahima") ? bold(item) : item}\n`;
     }
   });
+
+  text += `\n${getCopyrightText()}`;
 
   return text;
 };

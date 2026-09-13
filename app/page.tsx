@@ -479,7 +479,7 @@ export default function PanchangForm() {
 
   // Replace the existing Card component with this updated version
   return (
-    <div className="min-h-screen bg-background py-4 sm:py-8 px-2 sm:px-4 md:px-8 flex items-center justify-center transition-colors duration-300">
+    <div className="min-h-screen bg-background py-4 sm:py-8 px-2 sm:px-4 md:px-8 flex flex-col items-center justify-center gap-4 transition-colors duration-300">
       <Card className="relative max-w-7xl w-full mx-auto p-4 sm:p-6 md:p-10 space-y-6 md:space-y-8 bg-card border border-border text-card-foreground shadow-xl rounded-2xl transition-colors duration-300">
         <div className="flex flex-col border-b border-border pb-6 text-center">
           <div className="flex items-center justify-between w-full mb-4 sm:mb-2 gap-2">
@@ -827,6 +827,10 @@ export default function PanchangForm() {
           </div>
         </div>
       </Card>
+
+      <footer className="text-center text-sm text-muted-foreground w-full max-w-7xl px-2">
+        {t("copyright").replace("{year}", String(new Date().getFullYear()))}
+      </footer>
 
       {/* In-App Release Notes Announcement Modal */}
       <WhatsNewModal

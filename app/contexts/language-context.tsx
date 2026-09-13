@@ -113,6 +113,11 @@ export const translations: Translations = {
     hi: "लोड हो रहा है...",
     en: "Loading...",
   },
+  copyright: {
+    gu: "© {year} Dainik Panchang. All rights reserved.",
+    hi: "© {year} Dainik Panchang. All rights reserved.",
+    en: "© {year} Dainik Panchang. All rights reserved.",
+  },
 
   // Tabs
   panchangForm: {
