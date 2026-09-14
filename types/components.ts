@@ -1,5 +1,4 @@
-import type { FormData, PanchangTemplate } from "./panchang";
-import type { ThemeOption, OverlayOption } from "./theme";
+import type { FormData } from "./panchang";
 
 export interface WhatsNewModalProps {
   open: boolean;
@@ -18,43 +17,11 @@ export interface DynamicFieldsProps {
 }
 
 export interface CalendarPickerProps {
-  selectedDate: string;
-  onDateChange: (date: string) => void;
+  value: string;
+  onChange: (value: string) => void;
 }
 
 export interface ShareOptionsProps {
   formData: FormData;
   boldFields: string[];
-}
-
-export interface ThemeSelectorProps {
-  currentTheme: ThemeOption;
-  onSelectTheme: (theme: ThemeOption) => void;
-}
-
-export interface ImageOverlaySelectorProps {
-  selectedOverlay: OverlayOption;
-  onSelectOverlay: (overlay: OverlayOption) => void;
-}
-
-export interface TemplateGalleryProps {
-  onSelectTemplate: (template: PanchangTemplate) => void;
-  currentFormData: FormData;
-}
-
-export interface QRCodeGeneratorProps {
-  formData: FormData;
-  boldFields: string[];
-}
-
-export interface VoiceInputProps {
-  onTranscript: (field: string, text: string) => void;
-  currentField?: string;
-}
-
-export interface BatchGeneratorProps {
-  currentFormData: FormData;
-  boldFields: string[];
-  currentTheme: ThemeOption;
-  selectedOverlay: OverlayOption;
 }
