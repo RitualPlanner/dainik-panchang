@@ -237,7 +237,7 @@ export default function PanchangForm() {
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [tithi, nakshatra, yog, karan, suryoday, suryasta, aajNiRashi, dinMahima]);
-  const [currentTheme, setCurrentTheme] = useState<ThemeOption>({
+  const [currentTheme] = useState<ThemeOption>({
     id: "default",
     name: "મૂળભૂત",
     background: "#1a2e3b",
@@ -307,7 +307,19 @@ export default function PanchangForm() {
         }
       }
     }
-  }, [language]);
+  }, [
+    language,
+    setBoldFields,
+    setTithi,
+    setTarikh,
+    setNakshatra,
+    setYog,
+    setKaran,
+    setSuryoday,
+    setSuryasta,
+    setAajNiRashi,
+    setDinMahima,
+  ]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
