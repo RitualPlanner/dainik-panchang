@@ -110,12 +110,12 @@ export function WhatsNewModal({ open, onOpenChange }: WhatsNewModalProps) {
       },
     ],
     verifiedBadge: {
-      gu: "ગિટહબ પર આ વર્ઝન અધિકૃત રીતે Verified రిలీઝ ટેગ ધરાવે છે.",
+      gu: "GitHub પર આ આવૃત્તિ અધિકૃત રીતે Verified રીલીઝ ટેગ ધરાવે છે.",
       hi: "यह संस्करण आधिकारिक रूप से GitHub पर Verified रिलीज टैग के साथ उपलब्ध है।",
       en: "This version release is cryptographically signed & verified on GitHub.",
     },
     releaseLink: {
-      gu: "ગિટહબ પર પૂર્ણ રિલીઝ નોટ્સ જુઓ",
+      gu: "GitHub પર પૂર્ણ રીલીઝ નોટ્સ જુઓ",
       hi: "GitHub पर पूर्ण रिलीज नोट्स देखें",
       en: "View full release notes on GitHub",
     },
