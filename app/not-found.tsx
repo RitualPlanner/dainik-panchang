@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Home, Compass, ArrowLeft } from "lucide-react";
+import { Home, Compass } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function NotFound() {

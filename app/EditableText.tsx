@@ -31,7 +31,7 @@ const setLocalStorage = (key: string, value: string) => {
 };
 
 export default function VikramSamvat() {
-  const { t, language } = useLanguage();
+  const { language } = useLanguage();
 
   // Default values
   const defaultLine1 =

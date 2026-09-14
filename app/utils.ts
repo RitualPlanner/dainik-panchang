@@ -1,5 +1,4 @@
-export const getCopyrightText = () =>
-  `© ${new Date().getFullYear()} Dainik Panchang. All rights reserved.`;
+export const getCopyrightText = () => "";
 
 // Helper function to safely access localStorage
 const getLocalStorage = (key: string, defaultValue: string) => {
@@ -12,8 +11,8 @@ const getLocalStorage = (key: string, defaultValue: string) => {
 export const generateImage = async (
   formData: any,
   boldFields: string[],
-  _currentTheme?: any,
-  _selectedOverlay?: any
+  currentTheme?: any,
+  selectedOverlay?: any
 ) => {
   // Check if we're in a browser environment
   if (typeof window === "undefined") {
@@ -25,35 +24,37 @@ export const generateImage = async (
   const ctx = canvas.getContext("2d");
   if (!ctx) return new Blob();
 
+  // Calculate dynamic height based on dinMahima items count
+  const dinMahimaCount = formData.dinMahima
+    ? formData.dinMahima.filter((item: string) => Boolean(item && item.trim()))
+        .length
+    : 0;
+  const calculatedHeight = 650 + dinMahimaCount * 35 + 100;
+
   // Set canvas size
   canvas.width = 800;
-  canvas.height = 1200;
+  canvas.height = Math.max(1200, calculatedHeight);
 
-  // Set background
-  ctx.fillStyle = "#1a2e3b";
+  // Set background color from theme or default
+  const bgColor = currentTheme?.background || "#1a2e3b";
+  const textColor = currentTheme?.textColor || "white";
+
+  ctx.fillStyle = bgColor;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   // Set text style
-  ctx.fillStyle = "white";
+  ctx.fillStyle = textColor;
   ctx.textAlign = "center";
 
   // Add title
   ctx.font = "bold 32px Arial";
   ctx.fillText("॥ શ્રી ગણેશાય નમઃ ॥", canvas.width / 2, 50);
 
-  // Add separator - now left-aligned
-  ctx.textAlign = "center";
-
   // Center the title
-  ctx.textAlign = "center";
   ctx.font = "bold 28px Arial";
   ctx.fillText("દૈનિક પંચાંગ", canvas.width / 2, 120);
 
-  // Add separator - left-aligned
-  ctx.textAlign = "center";
-
   // Add static header - centered
-  ctx.textAlign = "center";
   ctx.font = "bold 16px Arial";
   const line1 = getLocalStorage(
     "vikramSamvatLine1",
@@ -139,20 +140,48 @@ export const generateImage = async (
   y += 40;
 
   // Din mahima items - left-aligned
-  ctx.textAlign = "left";
-  formData.dinMahima.forEach((item: string) => {
-    if (item.trim()) {
-      setFont("dinMahima");
-      ctx.fillText(`- ${item}`, 50, y);
-      y += 30;
+  if (Array.isArray(formData.dinMahima)) {
+    formData.dinMahima.forEach((item: string) => {
+      if (item && item.trim()) {
+        setFont("dinMahima");
+        ctx.fillText(`- ${item}`, 50, y);
+        y += 30;
+      }
+    });
+  }
+
+  // Draw overlay border if provided
+  if (
+    selectedOverlay &&
+    selectedOverlay.type !== "none" &&
+    selectedOverlay.imageUrl
+  ) {
+    try {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.src = selectedOverlay.imageUrl;
+      await new Promise((res) => {
+        img.onload = () => {
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          res(true);
+        };
+        img.onerror = () => res(false);
+      });
+    } catch (e) {
+      console.warn("Could not render overlay image onto canvas", e);
     }
-  });
+  }
 
   // Copyright footer
-  ctx.font = "16px Arial";
-  ctx.textAlign = "center";
-  ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
-  ctx.fillText(getCopyrightText(), canvas.width / 2, canvas.height - 28);
+  const copyrightText = getCopyrightText();
+  if (copyrightText) {
+    ctx.font = "16px Arial";
+    ctx.textAlign = "center";
+    ctx.fillStyle = textColor;
+    ctx.globalAlpha = 0.75;
+    ctx.fillText(copyrightText, canvas.width / 2, canvas.height - 28);
+    ctx.globalAlpha = 1.0;
+  }
 
   // Convert canvas to blob
   return new Promise<Blob>((resolve) => {
@@ -223,7 +252,10 @@ export const generateFormattedText = (
     }
   });
 
-  text += `\n${getCopyrightText()}`;
+  const copyrightText = getCopyrightText();
+  if (copyrightText) {
+    text += `\n${copyrightText}`;
+  }
 
   return text;
 };

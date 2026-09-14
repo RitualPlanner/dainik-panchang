@@ -143,52 +143,57 @@ export default function PanchangForm() {
   const [extractionError, setExtractionError] = useState<string | null>(null);
 
   // Function to reset all inputs & keep only 1 default empty din mahima row
-  const handleResetData = useCallback(() => {
-    const keysToRemove = [
-      "panchang_tithi",
-      "panchang_tarikh",
-      "panchang_nakshatra",
-      "panchang_yog",
-      "panchang_karan",
-      "panchang_suryoday",
-      "panchang_suryasta",
-      "panchang_aajNiRashi",
-      "panchang_dinMahima",
-      "panchang_boldFields",
-    ];
+  const handleResetData = useCallback(
+    (showToast: boolean = true) => {
+      const keysToRemove = [
+        "panchang_tithi",
+        "panchang_tarikh",
+        "panchang_nakshatra",
+        "panchang_yog",
+        "panchang_karan",
+        "panchang_suryoday",
+        "panchang_suryasta",
+        "panchang_aajNiRashi",
+        "panchang_dinMahima",
+        "panchang_boldFields",
+      ];
 
-    keysToRemove.forEach((k) => localStorage.removeItem(k));
+      keysToRemove.forEach((k) => localStorage.removeItem(k));
 
-    setTithi("");
-    setTarikh(getCurrentGujaratiDate());
-    setNakshatra("");
-    setYog("");
-    setKaran("");
-    setSuryoday("");
-    setSuryasta("");
-    setAajNiRashi("");
-    setDinMahima([""]);
-    setBoldFields([]);
+      setTithi("");
+      setTarikh(getCurrentGujaratiDate());
+      setNakshatra("");
+      setYog("");
+      setKaran("");
+      setSuryoday("");
+      setSuryasta("");
+      setAajNiRashi("");
+      setDinMahima([""]);
+      setBoldFields([]);
 
-    toast.success(
-      language === "gu"
-        ? "તમામ ડેટા સફળતાપૂર્વક રીસેટ થયો છે"
-        : language === "hi"
-          ? "सभी डेटा सफलतापूर्वक रीसेट हो गया है"
-          : "All form data has been successfully reset"
-    );
-  }, [
-    language,
-    setTithi,
-    setTarikh,
-    setNakshatra,
-    setYog,
-    setKaran,
-    setSuryoday,
-    setSuryasta,
-    setAajNiRashi,
-    setDinMahima,
-  ]);
+      if (showToast) {
+        toast.success(
+          language === "gu"
+            ? "તમામ ડેટા સફળતાપૂર્વક રીસેટ થયો છે"
+            : language === "hi"
+              ? "सभी डेटा सफलतापूर्वक रीसेट हो गया है"
+              : "All form data has been successfully reset"
+        );
+      }
+    },
+    [
+      language,
+      setTithi,
+      setTarikh,
+      setNakshatra,
+      setYog,
+      setKaran,
+      setSuryoday,
+      setSuryasta,
+      setAajNiRashi,
+      setDinMahima,
+    ]
+  );
 
   // Automatic Reset on Midnight / Date Change
   useEffect(() => {
@@ -199,7 +204,7 @@ export default function PanchangForm() {
       const lastSavedDate = localStorage.getItem("panchang_last_saved_date");
 
       if (lastSavedDate && lastSavedDate !== todayDateStr) {
-        handleResetData();
+        handleResetData(false);
         localStorage.setItem("panchang_last_saved_date", todayDateStr);
       } else if (!lastSavedDate) {
         localStorage.setItem("panchang_last_saved_date", todayDateStr);
@@ -237,7 +242,7 @@ export default function PanchangForm() {
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [tithi, nakshatra, yog, karan, suryoday, suryasta, aajNiRashi, dinMahima]);
-  const [currentTheme, setCurrentTheme] = useState<ThemeOption>({
+  const [currentTheme] = useState<ThemeOption>({
     id: "default",
     name: "મૂળભૂત",
     background: "#1a2e3b",
@@ -307,7 +312,19 @@ export default function PanchangForm() {
         }
       }
     }
-  }, [language]);
+  }, [
+    language,
+    setBoldFields,
+    setTithi,
+    setTarikh,
+    setNakshatra,
+    setYog,
+    setKaran,
+    setSuryoday,
+    setSuryasta,
+    setAajNiRashi,
+    setDinMahima,
+  ]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -828,9 +845,11 @@ export default function PanchangForm() {
         </div>
       </Card>
 
-      <footer className="text-center text-sm text-muted-foreground w-full max-w-7xl px-2">
-        {t("copyright").replace("{year}", String(new Date().getFullYear()))}
-      </footer>
+      {t("copyright") ? (
+        <footer className="text-center text-sm text-muted-foreground w-full max-w-7xl px-2">
+          {t("copyright").replace("{year}", String(new Date().getFullYear()))}
+        </footer>
+      ) : null}
 
       {/* In-App Release Notes Announcement Modal */}
       <WhatsNewModal
