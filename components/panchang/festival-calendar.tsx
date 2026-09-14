@@ -22,8 +22,8 @@ import {
   festivals,
   getTodaysFestival,
   getUpcomingFestivals,
-} from "../data/festivals";
-import { convertToGujaratiNumerals } from "../utils/date-utils";
+} from "@/app/data/festivals";
+import { convertToGujaratiNumerals } from "@/app/utils/date-utils";
 
 export function FestivalCalendar() {
   const [open, setOpen] = useState(false);

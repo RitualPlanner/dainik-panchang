@@ -5,28 +5,18 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ChevronLeft, ChevronRight, CalendarIcon } from "lucide-react";
-import { useLanguage } from "../contexts/language-context";
-import { convertToGujaratiNumerals } from "../utils/date-utils";
-import { festivals } from "../data/festivals";
-import { fetchPanchangData } from "../services/panchang-api";
-import { useScreenSize } from "../utils/responsive-utils";
+import { useLanguage } from "@/app/contexts/language-context";
+import { convertToGujaratiNumerals } from "@/app/utils/date-utils";
+import { festivals } from "@/app/data/festivals";
+import { fetchPanchangData } from "@/app/services/panchang-api";
+import { useScreenSize } from "@/app/utils/responsive-utils";
+import type { CalendarDay } from "@/types/panchang";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
-// Define calendar day type
-interface CalendarDay {
-  date: Date;
-  isCurrentMonth: boolean;
-  isToday: boolean;
-  hasFestival: boolean;
-  festivalName?: string;
-  festivalType?: "major" | "minor";
-  panchangData?: any;
-}
 
 export function CalendarView() {
   const { language, t } = useLanguage();
@@ -37,7 +27,6 @@ export function CalendarView() {
   const [isLoading, setIsLoading] = useState(false);
   const screenSize = useScreenSize();
 
-  // Month names in different languages
   const monthNames = {
     gu: [
       "જાન્યુઆરી",
@@ -83,37 +72,29 @@ export function CalendarView() {
     ],
   };
 
-  // Day names in different languages
   const dayNames = {
     gu: ["રવિ", "સોમ", "મંગળ", "બુધ", "ગુરુ", "શુક્ર", "શનિ"],
     hi: ["रवि", "सोम", "मंगल", "बुध", "गुरु", "शुक्र", "शनि"],
     en: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
   };
 
-  // Generate calendar days for the current month
   useEffect(() => {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
 
-    // Get first day of the month
     const firstDay = new Date(year, month, 1);
     const firstDayOfWeek = firstDay.getDay();
 
-    // Get last day of the month
     const lastDay = new Date(year, month + 1, 0);
     const daysInMonth = lastDay.getDate();
 
-    // Get days from previous month to fill the first week
     const daysFromPrevMonth = firstDayOfWeek;
 
-    // Get days from next month to fill the last week
     const daysInLastWeek = 7 - ((daysFromPrevMonth + daysInMonth) % 7);
     const daysFromNextMonth = daysInLastWeek === 7 ? 0 : daysInLastWeek;
 
-    // Generate calendar days
     const days: CalendarDay[] = [];
 
-    // Add days from previous month
     const prevMonth = new Date(year, month - 1, 1);
     const daysInPrevMonth = new Date(year, month, 0).getDate();
 
@@ -132,7 +113,6 @@ export function CalendarView() {
       });
     }
 
-    // Add days from current month
     for (let i = 1; i <= daysInMonth; i++) {
       const date = new Date(year, month, i);
       days.push({
@@ -144,7 +124,6 @@ export function CalendarView() {
       });
     }
 
-    // Add days from next month
     const nextMonth = new Date(year, month + 1, 1);
 
     for (let i = 1; i <= daysFromNextMonth; i++) {
@@ -161,7 +140,6 @@ export function CalendarView() {
     setCalendarDays(days);
   }, [currentDate]);
 
-  // Check if a date has a festival
   function hasFestivalOnDate(date: Date): boolean {
     const day = date.getDate().toString().padStart(2, "0");
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -170,7 +148,6 @@ export function CalendarView() {
     return festivals.some((festival) => festival.date === dateString);
   }
 
-  // Get festival info for a date
   function getFestivalInfo(date: Date): {
     festivalName?: string;
     festivalType?: "major" | "minor";
@@ -191,7 +168,6 @@ export function CalendarView() {
     return {};
   }
 
-  // Check if two dates are the same day
   function isSameDay(date1: Date, date2: Date): boolean {
     return (
       date1.getDate() === date2.getDate() &&
@@ -200,27 +176,23 @@ export function CalendarView() {
     );
   }
 
-  // Navigate to previous month
   const goToPrevMonth = () => {
     setCurrentDate(
       new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1)
     );
   };
 
-  // Navigate to next month
   const goToNextMonth = () => {
     setCurrentDate(
       new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1)
     );
   };
 
-  // Handle day selection
   const handleSelectDay = async (day: CalendarDay) => {
     setSelectedDate(day.date);
     setIsLoading(true);
 
     try {
-      // Fetch panchang data for the selected date
       const data = await fetchPanchangData(day.date);
       setSelectedDayData({
         ...data,
@@ -239,7 +211,6 @@ export function CalendarView() {
     }
   };
 
-  // Format date based on language
   const formatDate = (date: Date): string => {
     if (language === "gu") {
       return `${convertToGujaratiNumerals(date.getDate().toString())} ${monthNames.gu[date.getMonth()]}, ${convertToGujaratiNumerals(date.getFullYear().toString())}`;
@@ -276,7 +247,6 @@ export function CalendarView() {
           </div>
         </CardHeader>
         <CardContent>
-          {/* Day names */}
           <div className="grid grid-cols-7 mb-2">
             {dayNames[language as keyof typeof dayNames].map((day, index) => (
               <div key={index} className="text-center text-sm font-medium">
@@ -285,7 +255,6 @@ export function CalendarView() {
             ))}
           </div>
 
-          {/* Calendar grid */}
           <div className="grid grid-cols-7 gap-1">
             {calendarDays.map((day, index) => (
               <div
@@ -328,7 +297,6 @@ export function CalendarView() {
         </CardContent>
       </Card>
 
-      {/* Selected day details */}
       {selectedDate && selectedDayData && (
         <Card>
           <CardHeader className="pb-2">
@@ -366,7 +334,7 @@ export function CalendarView() {
                     : language === "gu"
                       ? "નાનો"
                       : language === "hi"
-                        ? "छोटा"
+                        ? "છોટા"
                         : "Minor"}
                 </Badge>
               </div>

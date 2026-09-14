@@ -13,115 +13,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Layers } from "lucide-react";
-import { useLanguage } from "../contexts/language-context";
-
-// Define overlay types
-export type OverlayType = "deity" | "border" | "background" | "none";
-
-// Define overlay options
-export interface OverlayOption {
-  id: string;
-  name: {
-    gu: string;
-    hi: string;
-    en: string;
-  };
-  previewUrl: string;
-  imageUrl: string;
-  type: OverlayType;
-}
-
-// Sample overlay options
-const overlayOptions: OverlayOption[] = [
-  {
-    id: "none",
-    name: {
-      gu: "કોઈ નહીં",
-      hi: "कोई नहीं",
-      en: "None",
-    },
-    previewUrl: "/placeholder.svg?height=60&width=60",
-    imageUrl: "",
-    type: "none",
-  },
-  {
-    id: "ganesh",
-    name: {
-      gu: "ગણેશ",
-      hi: "गणेश",
-      en: "Ganesh",
-    },
-    previewUrl: "/placeholder.svg?height=60&width=60&text=Ganesh",
-    imageUrl: "/placeholder.svg?height=200&width=200&text=Ganesh",
-    type: "deity",
-  },
-  {
-    id: "lakshmi",
-    name: {
-      gu: "લક્ષ્મી",
-      hi: "लक्ष्मी",
-      en: "Lakshmi",
-    },
-    previewUrl: "/placeholder.svg?height=60&width=60&text=Lakshmi",
-    imageUrl: "/placeholder.svg?height=200&width=200&text=Lakshmi",
-    type: "deity",
-  },
-  {
-    id: "shiva",
-    name: {
-      gu: "શિવ",
-      hi: "शिव",
-      en: "Shiva",
-    },
-    previewUrl: "/placeholder.svg?height=60&width=60&text=Shiva",
-    imageUrl: "/placeholder.svg?height=200&width=200&text=Shiva",
-    type: "deity",
-  },
-  {
-    id: "ornate-border",
-    name: {
-      gu: "અલંકૃત બોર્ડર",
-      hi: "अलंकृत बॉर्डर",
-      en: "Ornate Border",
-    },
-    previewUrl: "/placeholder.svg?height=60&width=60&text=Border1",
-    imageUrl: "/placeholder.svg?height=800&width=800&text=OrnateBorder",
-    type: "border",
-  },
-  {
-    id: "simple-border",
-    name: {
-      gu: "સાદી બોર્ડર",
-      hi: "साधारण बॉर्डर",
-      en: "Simple Border",
-    },
-    previewUrl: "/placeholder.svg?height=60&width=60&text=Border2",
-    imageUrl: "/placeholder.svg?height=800&width=800&text=SimpleBorder",
-    type: "border",
-  },
-  {
-    id: "temple-bg",
-    name: {
-      gu: "મંદિર બેકગ્રાઉન્ડ",
-      hi: "मंदिर बैकग्राउंड",
-      en: "Temple Background",
-    },
-    previewUrl: "/placeholder.svg?height=60&width=60&text=BG1",
-    imageUrl: "/placeholder.svg?height=1200&width=800&text=TempleBG",
-    type: "background",
-  },
-  {
-    id: "om-bg",
-    name: {
-      gu: "ૐ બેકગ્રાઉન્ડ",
-      hi: "ॐ बैकग्राउंड",
-      en: "Om Background",
-    },
-    previewUrl: "/placeholder.svg?height=60&width=60&text=BG2",
-    imageUrl: "/placeholder.svg?height=1200&width=800&text=OmBG",
-    type: "background",
-  },
-];
+import { useLanguage } from "@/app/contexts/language-context";
+import type { OverlayOption } from "@/types/theme";
+import { PRESET_OVERLAYS } from "@/constants/theme";
 
 interface ImageOverlaySelectorProps {
   onSelectOverlay: (overlay: OverlayOption) => void;
@@ -134,16 +28,16 @@ export function ImageOverlaySelector({
 }: ImageOverlaySelectorProps) {
   const { language, t } = useLanguage();
   const [open, setOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<OverlayType>("deity");
+  const [activeTab, setActiveTab] = useState<string>("deity");
 
   const handleSelectOverlay = (overlay: OverlayOption) => {
     onSelectOverlay(overlay);
     setOpen(false);
   };
 
-  // Get selected overlay
   const selectedOverlay =
-    overlayOptions.find((o) => o.id === selectedOverlayId) || overlayOptions[0];
+    PRESET_OVERLAYS.find((o) => o.id === selectedOverlayId) ||
+    PRESET_OVERLAYS[0];
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -179,10 +73,7 @@ export function ImageOverlaySelector({
           <DialogTitle>{t("addOverlay")}</DialogTitle>
         </DialogHeader>
 
-        <Tabs
-          value={activeTab}
-          onValueChange={(value) => setActiveTab(value as OverlayType)}
-        >
+        <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value)}>
           <TabsList className="grid grid-cols-4">
             <TabsTrigger value="deity">
               {language === "gu"
@@ -216,7 +107,7 @@ export function ImageOverlaySelector({
 
           <TabsContent value="none" className="pt-4">
             <Button
-              onClick={() => handleSelectOverlay(overlayOptions[0])}
+              onClick={() => handleSelectOverlay(PRESET_OVERLAYS[0])}
               variant="outline"
               className="w-full"
             >
@@ -234,9 +125,8 @@ export function ImageOverlaySelector({
                 value={selectedOverlayId}
                 className="grid grid-cols-3 gap-4"
               >
-                {overlayOptions
-                  .filter((option) => option.type === type)
-                  .map((option) => (
+                {PRESET_OVERLAYS.filter((option) => option.type === type).map(
+                  (option) => (
                     <div
                       key={option.id}
                       className="flex flex-col items-center space-y-2"
@@ -263,7 +153,8 @@ export function ImageOverlaySelector({
                         </span>
                       </Label>
                     </div>
-                  ))}
+                  )
+                )}
               </RadioGroup>
             </TabsContent>
           ))}

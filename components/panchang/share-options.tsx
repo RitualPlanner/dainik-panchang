@@ -18,13 +18,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Share2, Copy, Facebook, Send, MessageCircle } from "lucide-react";
-import { generateFormattedText } from "../utils";
+import { generateFormattedText } from "@/app/utils";
 import { toast } from "sonner";
-
-interface ShareOptionsProps {
-  formData: any;
-  boldFields: string[];
-}
+import type { ShareOptionsProps } from "@/types/components";
 
 export function ShareOptions({ formData, boldFields }: ShareOptionsProps) {
   const [dialogOpen, setDialogOpen] = useState(false);

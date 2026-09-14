@@ -5,8 +5,6 @@ export type Festival = {
   type: "major" | "minor";
 };
 
-// This is a simplified list of Hindu festivals for 2025
-// In a production app, you would have a more comprehensive database
 export const festivals: Festival[] = [
   {
     date: "14/01",
@@ -127,7 +125,9 @@ export function getTodaysFestival(): Festival | null {
   return festivals.find((festival) => festival.date === todayFormatted) || null;
 }
 
-export function getUpcomingFestivals(count = 3): Festival[] {
+export function getUpcomingFestivals(
+  count = 3
+): (Festival & { daysUntil: number })[] {
   const today = new Date();
   const currentDay = today.getDate();
   const currentMonth = today.getMonth() + 1;

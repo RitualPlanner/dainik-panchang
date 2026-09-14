@@ -10,14 +10,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { QrCode } from "lucide-react";
-import { useLanguage } from "../contexts/language-context";
-import { generateQRCode } from "../utils/qr-generator";
-import { generateFormattedText } from "../utils";
-
-interface QRCodeGeneratorProps {
-  formData: any;
-  boldFields: string[];
-}
+import { useLanguage } from "@/app/contexts/language-context";
+import { generateQRCode } from "@/app/utils/qr-generator";
+import { generateFormattedText } from "@/app/utils";
+import type { QRCodeGeneratorProps } from "@/types/components";
 
 export function QRCodeGenerator({
   formData,
@@ -30,11 +26,9 @@ export function QRCodeGenerator({
 
   useEffect(() => {
     if (open) {
-      // Generate formatted panchang text
       const text = generateFormattedText(formData, boldFields);
       setPanchangText(text);
 
-      // Generate QR code from panchang text
       generateQRCode(text).then((url) => {
         setQrCodeUrl(url);
       });
@@ -98,7 +92,7 @@ export function QRCodeGenerator({
               ? "આ QR કોડને સ્કેન કરવાથી આજનો પંચાંગ વિગતો મળશે"
               : t("language") === "hi"
                 ? "इस QR कोड को स्कैन करने से आज का पंचांग विवरण मिलेगा"
-                : "Scanning this QR code will show today's Panchang details"}
+                : "Scanning this QR code will provide today's Panchang details"}
           </p>
         </div>
       </DialogContent>

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Mic, MicOff, Volume2 } from "lucide-react";
-import { useLanguage } from "../contexts/language-context";
+import { useLanguage } from "@/app/contexts/language-context";
 
 interface VoiceInputProps {
   onTranscript: (text: string) => void;
@@ -17,19 +17,17 @@ export function VoiceInput({ onTranscript, language }: VoiceInputProps) {
   const [recognition, setRecognition] = useState<any>(null);
   const [isSupported, setIsSupported] = useState(true);
 
-  // Initialize speech recognition
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // Check if browser supports speech recognition
       const SpeechRecognition =
-        window.SpeechRecognition || window.webkitSpeechRecognition;
+        (window as any).SpeechRecognition ||
+        (window as any).webkitSpeechRecognition;
 
       if (SpeechRecognition) {
         const recognitionInstance = new SpeechRecognition();
         recognitionInstance.continuous = true;
         recognitionInstance.interimResults = true;
 
-        // Set language based on prop
         recognitionInstance.lang =
           language === "gu" ? "gu-IN" : language === "hi" ? "hi-IN" : "en-US";
 
@@ -56,7 +54,6 @@ export function VoiceInput({ onTranscript, language }: VoiceInputProps) {
     };
   }, [language]);
 
-  // Update recognition language when language changes
   useEffect(() => {
     if (recognition) {
       recognition.lang =
@@ -71,7 +68,6 @@ export function VoiceInput({ onTranscript, language }: VoiceInputProps) {
       recognition.stop();
       setIsListening(false);
 
-      // Send final transcript to parent component
       if (transcript) {
         onTranscript(transcript);
         setTranscript("");
@@ -142,9 +138,16 @@ export function VoiceInput({ onTranscript, language }: VoiceInputProps) {
         </Button>
       </div>
 
-      {isListening && transcript && (
-        <div className="p-2 border rounded-md bg-muted">
-          <p className="text-sm">{transcript}</p>
+      {transcript && (
+        <div className="p-2 bg-muted rounded-md text-sm">
+          <p className="font-medium text-xs text-muted-foreground mb-1">
+            {language === "gu"
+              ? "સાંભળવામાં આવ્યું:"
+              : language === "hi"
+                ? "सुना गया:"
+                : "Heard:"}
+          </p>
+          <p>{transcript}</p>
         </div>
       )}
     </div>
