@@ -1,5 +1,4 @@
-export const getCopyrightText = () =>
-  `© ${new Date().getFullYear()} Dainik Panchang. All rights reserved.`;
+export const getCopyrightText = () => "";
 
 // Helper function to safely access localStorage
 const getLocalStorage = (key: string, defaultValue: string) => {
@@ -174,12 +173,15 @@ export const generateImage = async (
   }
 
   // Copyright footer
-  ctx.font = "16px Arial";
-  ctx.textAlign = "center";
-  ctx.fillStyle = textColor;
-  ctx.globalAlpha = 0.75;
-  ctx.fillText(getCopyrightText(), canvas.width / 2, canvas.height - 28);
-  ctx.globalAlpha = 1.0;
+  const copyrightText = getCopyrightText();
+  if (copyrightText) {
+    ctx.font = "16px Arial";
+    ctx.textAlign = "center";
+    ctx.fillStyle = textColor;
+    ctx.globalAlpha = 0.75;
+    ctx.fillText(copyrightText, canvas.width / 2, canvas.height - 28);
+    ctx.globalAlpha = 1.0;
+  }
 
   // Convert canvas to blob
   return new Promise<Blob>((resolve) => {
@@ -250,7 +252,10 @@ export const generateFormattedText = (
     }
   });
 
-  text += `\n${getCopyrightText()}`;
+  const copyrightText = getCopyrightText();
+  if (copyrightText) {
+    text += `\n${copyrightText}`;
+  }
 
   return text;
 };

@@ -840,9 +840,11 @@ export default function PanchangForm() {
         </div>
       </Card>
 
-      <footer className="text-center text-sm text-muted-foreground w-full max-w-7xl px-2">
-        {t("copyright").replace("{year}", String(new Date().getFullYear()))}
-      </footer>
+      {t("copyright") ? (
+        <footer className="text-center text-sm text-muted-foreground w-full max-w-7xl px-2">
+          {t("copyright").replace("{year}", String(new Date().getFullYear()))}
+        </footer>
+      ) : null}
 
       {/* In-App Release Notes Announcement Modal */}
       <WhatsNewModal
