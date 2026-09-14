@@ -143,52 +143,57 @@ export default function PanchangForm() {
   const [extractionError, setExtractionError] = useState<string | null>(null);
 
   // Function to reset all inputs & keep only 1 default empty din mahima row
-  const handleResetData = useCallback(() => {
-    const keysToRemove = [
-      "panchang_tithi",
-      "panchang_tarikh",
-      "panchang_nakshatra",
-      "panchang_yog",
-      "panchang_karan",
-      "panchang_suryoday",
-      "panchang_suryasta",
-      "panchang_aajNiRashi",
-      "panchang_dinMahima",
-      "panchang_boldFields",
-    ];
+  const handleResetData = useCallback(
+    (showToast: boolean = true) => {
+      const keysToRemove = [
+        "panchang_tithi",
+        "panchang_tarikh",
+        "panchang_nakshatra",
+        "panchang_yog",
+        "panchang_karan",
+        "panchang_suryoday",
+        "panchang_suryasta",
+        "panchang_aajNiRashi",
+        "panchang_dinMahima",
+        "panchang_boldFields",
+      ];
 
-    keysToRemove.forEach((k) => localStorage.removeItem(k));
+      keysToRemove.forEach((k) => localStorage.removeItem(k));
 
-    setTithi("");
-    setTarikh(getCurrentGujaratiDate());
-    setNakshatra("");
-    setYog("");
-    setKaran("");
-    setSuryoday("");
-    setSuryasta("");
-    setAajNiRashi("");
-    setDinMahima([""]);
-    setBoldFields([]);
+      setTithi("");
+      setTarikh(getCurrentGujaratiDate());
+      setNakshatra("");
+      setYog("");
+      setKaran("");
+      setSuryoday("");
+      setSuryasta("");
+      setAajNiRashi("");
+      setDinMahima([""]);
+      setBoldFields([]);
 
-    toast.success(
-      language === "gu"
-        ? "તમામ ડેટા સફળતાપૂર્વક રીસેટ થયો છે"
-        : language === "hi"
-          ? "सभी डेटा सफलतापूर्वक रीसेट हो गया है"
-          : "All form data has been successfully reset"
-    );
-  }, [
-    language,
-    setTithi,
-    setTarikh,
-    setNakshatra,
-    setYog,
-    setKaran,
-    setSuryoday,
-    setSuryasta,
-    setAajNiRashi,
-    setDinMahima,
-  ]);
+      if (showToast) {
+        toast.success(
+          language === "gu"
+            ? "તમામ ડેટા સફળતાપૂર્વક રીસેટ થયો છે"
+            : language === "hi"
+              ? "सभी डेटा सफलतापूर्वक रीसेट हो गया है"
+              : "All form data has been successfully reset"
+        );
+      }
+    },
+    [
+      language,
+      setTithi,
+      setTarikh,
+      setNakshatra,
+      setYog,
+      setKaran,
+      setSuryoday,
+      setSuryasta,
+      setAajNiRashi,
+      setDinMahima,
+    ]
+  );
 
   // Automatic Reset on Midnight / Date Change
   useEffect(() => {
@@ -199,7 +204,7 @@ export default function PanchangForm() {
       const lastSavedDate = localStorage.getItem("panchang_last_saved_date");
 
       if (lastSavedDate && lastSavedDate !== todayDateStr) {
-        handleResetData();
+        handleResetData(false);
         localStorage.setItem("panchang_last_saved_date", todayDateStr);
       } else if (!lastSavedDate) {
         localStorage.setItem("panchang_last_saved_date", todayDateStr);
