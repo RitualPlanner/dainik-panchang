@@ -114,9 +114,9 @@ export const translations: Translations = {
     en: "Loading...",
   },
   copyright: {
-    gu: "",
-    hi: "",
-    en: "",
+    gu: "© {year} Dainik Panchang. All rights reserved.",
+    hi: "© {year} Dainik Panchang. All rights reserved.",
+    en: "© {year} Dainik Panchang. All rights reserved.",
   },
 
   // Tabs
