@@ -15,9 +15,9 @@ import {
   MoreVertical,
   RotateCcw,
 } from "lucide-react";
-import { WhatsNewModal } from "@/components/whats-new-modal";
-import { RefreshConfirmModal } from "@/components/refresh-confirm-modal";
-import DynamicFields from "./dynamic-fields";
+import { WhatsNewModal } from "@/components/modals/whats-new-modal";
+import { RefreshConfirmModal } from "@/components/modals/refresh-confirm-modal";
+import DynamicFields from "@/components/panchang/dynamic-fields";
 import {
   generateImage,
   generateFormattedText,
@@ -25,14 +25,18 @@ import {
 } from "./utils";
 import { generatePDF } from "./utils/pdf-export";
 import { getCurrentGujaratiDate } from "./utils/date-utils";
-import EditableText from "./EditableText";
-import { CalendarPicker } from "./components/calendar-picker";
-import { type ThemeOption } from "./components/theme-selector";
-import { ShareOptions } from "./components/share-options";
-import { type OverlayOption } from "./components/image-overlay-selector";
-import { LanguageSwitcher } from "./components/language-switcher";
+import EditableText from "@/components/panchang/editable-text";
+import { CalendarPicker } from "@/components/panchang/calendar-picker";
+import { ShareOptions } from "@/components/panchang/share-options";
+import { LanguageSwitcher } from "@/components/panchang/language-switcher";
 import { useLanguage } from "./contexts/language-context";
 import { useScreenSize, getResponsiveFontSize } from "./utils/responsive-utils";
+import type { FormData, ThemeOption, OverlayOption } from "@/types";
+import {
+  DEFAULT_FORM_DATA,
+  PANCHANG_STORAGE_KEYS,
+  DEFAULT_OVERLAY,
+} from "@/constants";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -52,63 +56,30 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { toast } from "sonner";
 import pkg from "@/package.json";
 
-type FormData = {
-  tithi: string;
-  tarikh: string;
-  nakshatra: string;
-  yog: string;
-  karan: string;
-  suryoday: string;
-  suryasta: string;
-  aajNiRashi: string;
-  dinMahima: string[];
-};
-
-// Default form data
-const defaultFormData: FormData = {
-  tithi: "",
-  tarikh: getCurrentGujaratiDate(),
-  nakshatra: "",
-  yog: "",
-  karan: "",
-  suryoday: "",
-  suryasta: "",
-  aajNiRashi: "",
-  dinMahima: [""],
-};
-
 export default function PanchangForm() {
   // Add this after the component declaration
   const { t, language } = useLanguage();
   const screenSize = useScreenSize();
 
   // Form state fields (initialized empty on load/refresh)
-  const [tithi, setTithi] = useState<string>(defaultFormData.tithi);
-  const [tarikh, setTarikh] = useState<string>(defaultFormData.tarikh);
-  const [nakshatra, setNakshatra] = useState<string>(defaultFormData.nakshatra);
-  const [yog, setYog] = useState<string>(defaultFormData.yog);
-  const [karan, setKaran] = useState<string>(defaultFormData.karan);
-  const [suryoday, setSuryoday] = useState<string>(defaultFormData.suryoday);
-  const [suryasta, setSuryasta] = useState<string>(defaultFormData.suryasta);
+  const [tithi, setTithi] = useState<string>(DEFAULT_FORM_DATA.tithi);
+  const [tarikh, setTarikh] = useState<string>(DEFAULT_FORM_DATA.tarikh);
+  const [nakshatra, setNakshatra] = useState<string>(
+    DEFAULT_FORM_DATA.nakshatra
+  );
+  const [yog, setYog] = useState<string>(DEFAULT_FORM_DATA.yog);
+  const [karan, setKaran] = useState<string>(DEFAULT_FORM_DATA.karan);
+  const [suryoday, setSuryoday] = useState<string>(DEFAULT_FORM_DATA.suryoday);
+  const [suryasta, setSuryasta] = useState<string>(DEFAULT_FORM_DATA.suryasta);
   const [aajNiRashi, setAajNiRashi] = useState<string>(
-    defaultFormData.aajNiRashi
+    DEFAULT_FORM_DATA.aajNiRashi
   );
   const [dinMahima, setDinMahima] = useState<string[]>(
-    defaultFormData.dinMahima
+    DEFAULT_FORM_DATA.dinMahima
   );
 
   // Add these new state variables after the existing ones
-  const [selectedOverlay] = useState<OverlayOption>({
-    id: "none",
-    name: {
-      gu: "કોઈ નહીં",
-      hi: "कोई नहीं",
-      en: "None",
-    },
-    previewUrl: "/placeholder.svg?height=60&width=60",
-    imageUrl: "",
-    type: "none",
-  });
+  const [selectedOverlay] = useState<OverlayOption>(DEFAULT_OVERLAY);
 
   // Combine all fields into formData object
   const formData: FormData = {
@@ -145,20 +116,7 @@ export default function PanchangForm() {
   // Function to reset all inputs & keep only 1 default empty din mahima row
   const handleResetData = useCallback(
     (showToast: boolean = true) => {
-      const keysToRemove = [
-        "panchang_tithi",
-        "panchang_tarikh",
-        "panchang_nakshatra",
-        "panchang_yog",
-        "panchang_karan",
-        "panchang_suryoday",
-        "panchang_suryasta",
-        "panchang_aajNiRashi",
-        "panchang_dinMahima",
-        "panchang_boldFields",
-      ];
-
-      keysToRemove.forEach((k) => localStorage.removeItem(k));
+      PANCHANG_STORAGE_KEYS.forEach((k) => localStorage.removeItem(k));
 
       setTithi("");
       setTarikh(getCurrentGujaratiDate());

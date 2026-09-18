@@ -8,7 +8,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Globe } from "lucide-react";
-import { useLanguage, type Language } from "../contexts/language-context";
+import { useLanguage } from "@/app/contexts/language-context";
+import type { Language } from "@/types/language";
 
 export function LanguageSwitcher() {
   const { language, setLanguage } = useLanguage();

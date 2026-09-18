@@ -14,7 +14,7 @@ import { CalendarIcon } from "lucide-react";
 import {
   convertToGujaratiNumerals,
   parseGujaratiDate,
-} from "../utils/date-utils";
+} from "@/app/utils/date-utils";
 
 interface CalendarPickerProps {
   value: string;
@@ -25,7 +25,6 @@ export function CalendarPicker({ value, onChange }: CalendarPickerProps) {
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState<Date | undefined>(undefined);
 
-  // Sync date selection state when picker is opened or value is changed externally
   useEffect(() => {
     if (value) {
       const parsed = parseGujaratiDate(value);
@@ -35,19 +34,18 @@ export function CalendarPicker({ value, onChange }: CalendarPickerProps) {
     }
   }, [value, open]);
 
-  const handleSelect = (date: Date | undefined) => {
-    if (!date) return;
+  const handleSelect = (selectedDate: Date | undefined) => {
+    if (!selectedDate) return;
 
-    // Format the date as DD/MM/YYYY
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
+    const day = String(selectedDate.getDate()).padStart(2, "0");
+    const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
+    const year = selectedDate.getFullYear();
 
     const formattedDate = `${day}/${month}/${year}`;
     const gujaratiDate = convertToGujaratiNumerals(formattedDate);
 
     onChange(gujaratiDate);
-    setDate(date);
+    setDate(selectedDate);
     setOpen(false);
   };
 
