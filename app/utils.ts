@@ -217,7 +217,7 @@ export const generateFormattedText = (
   text += line1;
   text += "\n";
   text += line2;
-  text += "\n\n";
+  text += "\n";
 
   // Add separator before tithi
   text += "............................\n";
